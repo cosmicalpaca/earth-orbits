@@ -50,7 +50,7 @@
         "no-unexpected-multiline": 1, // Avoid code that looks like two expressions but is actually one
         "no-unreachable": 2, // disallow unreachable statements after a return, throw, continue, or break statement (recommended)
         "use-isnan": 2, // disallow comparisons with the value `NaN` (recommended)
-        "valid-jsdoc": [1, {"requireReturn": false}], // Ensure JSDoc comments are valid, but don't require `@return {undefined|void}`
+        "valid-jsdoc": [0, {"requireReturn": false}], // Ensure JSDoc comments are valid, but don't require `@return {undefined|void}`
         "valid-typeof": 1, // Ensure that the results of typeof are compared against a valid string (recommended)
 
         //
