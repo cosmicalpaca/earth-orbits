@@ -1,7 +1,8 @@
 const THREE = require('three');
+const c = require('../utils/constants');
 
 const SEGMENTS = 64;
-const RADIUS = 6.371;
+const RADIUS = c.earthRadius;
 
 /**
  * Earth class. Instances have two properties: planet and clouds

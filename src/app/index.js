@@ -5,6 +5,8 @@ const OrbitControls = require('three-orbit-controls')(THREE);
 const Stats = require('stats.js');
 
 const Earth = require('./meshes/earth');
+const math = require('./utils/math');
+const SurfaceLocation = require('./meshes/surface-location');
 
 /**
  * This file sets up THREE.js and all
@@ -36,7 +38,7 @@ class App {
 
         this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 10000);
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-        this.camera.position.copy(new THREE.Vector3(0, 0, 10));
+        this.camera.position.copy(new THREE.Vector3(0, 0, 20));
 
         this.controls = new OrbitControls(this.camera);
         this.controls.damping = 2;
@@ -66,6 +68,9 @@ class App {
 
         this.earth = new Earth();
         this.scene.add(this.earth.planet, this.earth.clouds);
+
+        let seattle = new SurfaceLocation(47.60, 122.33);
+        this.scene.add(seattle);
     }
 
     /**
