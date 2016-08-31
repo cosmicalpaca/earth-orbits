@@ -2,11 +2,17 @@
     "root": true,
 
     "parser": "espree",
-    "ecmaFeatures": {},
 
     "parserOptions": {
-        "ecmaVersion": 6
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+            "jsx": true
+        },
     },
+
+    "plugins": [
+        "react"
+    ],
 
     //
     // http://eslint.org/docs/rules/
@@ -145,7 +151,7 @@
         "no-undef-init": 2, // disallow use of undefined when initializing variables
         "no-undef": 2, // disallow use of undeclared variables unless mentioned in a `/*global */` block (recommended)
         "no-undefined": 2, // disallow use of `undefined` variable
-        "no-unused-vars": [2, {"vars": "all", "args": "none"}], // disallow declaration of variables that are not used in the code (recommended)
+        "no-unused-vars": [1, {"vars": "all", "args": "none"}], // disallow declaration of variables that are not used in the code (recommended)
         "no-use-before-define": 2, // disallow use of variables before they are defined
 
         //
