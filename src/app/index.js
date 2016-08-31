@@ -5,13 +5,28 @@ const OrbitControls = require('three-orbit-controls')(THREE);
 const Stats = require('stats.js');
 
 const Earth = require('./meshes/earth');
-const math = require('./utils/math');
 const SurfaceLocation = require('./meshes/surface-location');
 
+const ReactDom = require('react-dom');
+
+const React = require('react'); // eslint-disable-line no-unused-vars
+const UI = require('./ui'); // eslint-disable-line no-unused-vars
+
 /**
- * This file sets up THREE.js and all
- * things that go with it.
+ * This file is used to set up things
  */
+
+/** Create DOM elements used for React and WebGL **/
+let reactContainer = document.createElement('div');
+reactContainer.className = 'react-container';
+document.body.appendChild(reactContainer);
+
+let webGLContainer = document.createElement('div');
+webGLContainer.className = 'webgl-container';
+document.body.appendChild(webGLContainer);
+
+ReactDom.render(<UI/>, reactContainer);
+
 
 class App {
     constructor() {
@@ -42,8 +57,9 @@ class App {
 
         this.controls = new OrbitControls(this.camera);
         this.controls.damping = 2;
+        this.controls.addEventListener('change', () => this.onControlsUpdate());
 
-        document.body.appendChild(this.renderer.domElement);
+        webGLContainer.appendChild(this.renderer.domElement);
     }
 
     /**
@@ -71,6 +87,16 @@ class App {
 
         let seattle = new SurfaceLocation(47.60, 122.33);
         this.scene.add(seattle);
+    }
+
+    /**
+     * When camera is moved, we log the position and rotation
+     */
+    onControlsUpdate() {
+        let positionVector = this.camera.position;
+        let lookAtVector = new THREE.Vector3(0, 0, -1);
+        lookAtVector.applyQuaternion(this.camera.quaternion);
+        store.dispatch('CAMERA-MOVED', {position: positionVector, lookAt: lookAtVector});
     }
 
     /**
