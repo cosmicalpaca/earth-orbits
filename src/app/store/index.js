@@ -1,16 +1,12 @@
 const Model = require('backbone-model').Model;
 
 var Store = Model.extend({
-    initialize: function() {
-
-    },
-
     dispatch: function(action, attributes) {
         switch (action) {
             case 'CAMERA-MOVED':
                 this.set({
-                    position: attributes.position.toArray().toString(),
-                    lookAt: attributes.lookAt.toArray().toString(),
+                    position: attributes.position.toArray().map(c => c.toFixed(2)).toString(),
+                    lookAt: attributes.lookAt.toArray().map(c => c.toFixed(2)).toString(),
                 });
                 break;
             default:

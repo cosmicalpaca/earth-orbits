@@ -12,6 +12,8 @@ body {
 
 .react-container {
     z-index: 1;
+    width: 100%;
+    height: 100%;
 }
 
 .webgl-container {
@@ -21,4 +23,11 @@ body {
 
 .react-container {
     color: #FFF;
+}
+
+.variables-display {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 12px;
 }
