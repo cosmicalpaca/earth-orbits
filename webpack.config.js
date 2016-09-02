@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
-const DashboardPlugin = require('webpack-dashboard/plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 /**
  * # Webpack Build Process for Data Lasso
@@ -14,35 +14,29 @@ const DashboardPlugin = require('webpack-dashboard/plugin');
  * --watch
  * Makes webpack watch for changes
  *
- * --minified
- * Passes output through UglifyJs plugin and builds into `datalasso.min.js`. For use
- * without commonjs modules, such as Data Lasso hosted on GitHub pages
- *
  */
 
 const production = (process.argv.indexOf('--production') >= 0);
-const minified = (process.argv.indexOf('--minified') >= 0);
 const watch = (process.argv.indexOf('--watch') >= 0);
 
 /** What goes in **/
 const entry = path.join(__dirname, 'src/index.js');
 
 /** Where things are built **/
-const outputDir = path.join(__dirname, 'public/build');
-const outputFile = 'app.js';
+const outputDir = path.join(__dirname, 'public');
 
 function getStylesheetLoader() {
     if (production) {
-        return 'style-loader!css-loader!postcss-loader!sass-loader';
+        return 'css-loader!postcss-loader!sass-loader';
     } else {
-        return 'style-loader?sourceMap!css-loader?sourceMap!postcss-loader!sass-loader?sourceMap';
+        return 'css-loader?sourceMap!postcss-loader!sass-loader?sourceMap';
     }
 }
 
 let webpackConfig = {
     entry: entry,
     output: {
-        filename: outputFile,
+        filename: 'app.js',
         path: outputDir,
         // publicPath: '/public/',
     },
@@ -51,7 +45,7 @@ let webpackConfig = {
         loaders: [
             {
                 test: /\.scss$/,
-                loader: getStylesheetLoader(),
+                loader: ExtractTextPlugin.extract('style-loader', getStylesheetLoader()),
             },
             {
                 test: /\.glsl$/,
@@ -79,7 +73,7 @@ let webpackConfig = {
         }),
     ],
     plugins: [
-        new DashboardPlugin(),
+        new ExtractTextPlugin(production ? 'app.min.css' : 'app.css'),
     ],
 };
 
@@ -89,15 +83,14 @@ if (production) {
             NODE_ENV: JSON.stringify('production'),
         },
     }));
-}
 
-if (minified) {
     webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
         compress: {
             warnings: false,
         },
     }));
-    webpackConfig.output.filename = 'datalasso.min.js';
+
+    webpackConfig.output.filename = 'app.min.js';
 }
 
 module.exports = webpackConfig;
