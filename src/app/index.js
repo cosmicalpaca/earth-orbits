@@ -59,10 +59,23 @@ class App {
         this.camera.position.copy(new THREE.Vector3(0, 0, 20));
 
         this.controls = new OrbitControls(this.camera);
-        this.controls.damping = 2;
+        this.controls.zoomSpeed = 0.2;
         this.controls.addEventListener('change', () => this.onControlsUpdate());
 
-        webGLContainer.appendChild(this.renderer.domElement);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Shift') {
+                (typeof this.__controls === 'undefined') && (this.__controls = true);
+                if (this.__controls) {
+                    this.__controls = false;
+                    this.controls.enabled = false;
+                } else {
+                    this.__controls = true;
+                    this.controls.enabled = true;
+                }
+            }
+        });
+
+        document.getElementById('webgl-container').appendChild(this.renderer.domElement);
     }
 
     /**
