@@ -16,24 +16,27 @@ const UI = require('./ui'); // eslint-disable-line no-unused-vars
  * This file is used to set up things
  */
 
-/** Create DOM elements used for React and WebGL **/
-let reactContainer = document.createElement('div');
-reactContainer.className = 'react-container';
-document.body.appendChild(reactContainer);
-
-let webGLContainer = document.createElement('div');
-webGLContainer.className = 'webgl-container';
-document.body.appendChild(webGLContainer);
-
-ReactDom.render(<UI/>, reactContainer);
+ReactDom.render(<UI/>, document.getElementById('react-container'));
 
 
 class App {
     constructor() {
-        this.initializeScene();
-        this.initializeStats();
-        this.composeScene();
-        this.render();
+        this.loadFonts();
+    }
+
+    /**
+     * Load fonts first
+     */
+    loadFonts() {
+        let fontLoader = new THREE.FontLoader();
+        fontLoader.load('fonts/droid_serif_bold.typeface.json', (response) => {
+            this.font = response;
+
+            this.initializeScene();
+            this.initializeStats();
+            this.composeScene();
+            this.render();
+        });
     }
 
     /**
