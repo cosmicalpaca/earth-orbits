@@ -4,6 +4,8 @@ const c = require('../utils/constants');
 const SEGMENTS = 64;
 const RADIUS = c.earthRadius;
 
+const HD = false; // TEMPORARY
+
 /**
  * Earth class. Instances have two properties: planet and clouds
  */
@@ -20,10 +22,9 @@ class Earth {
     planetMesh(radius) {
         let loader = new THREE.TextureLoader();
 
-        // let mapTexture = loader.load('images/map_w_clouds_8k.jpg');
-        let mapTexture = loader.load('images/map_8k.jpg');
-        let bumpTexture = loader.load('images/bump_8k.jpg');
-        let specTexture = loader.load('images/spec_8k.png');
+        let mapTexture = loader.load(HD ? 'images/map_8k.jpg' : 'images/map_4k.jpg');
+        let bumpTexture = loader.load(HD ? 'images/bump_8k.jpg' : 'images/bump_4k.jpg');
+        let specTexture = loader.load(HD ? 'images/spec_8k.png' : 'images/spec_4k.png');
 
         mapTexture.anisotropy = 16;
 
@@ -48,7 +49,7 @@ class Earth {
 
         let loader = new THREE.TextureLoader();
 
-        let map = loader.load('images/clouds_8k.jpg');
+        let map = loader.load(HD ? 'images/clouds_8k.jpg' : 'images/clouds_8k.jpg');
         map.anisotropy = 16;
 
         let geometry = new THREE.SphereGeometry(radius, SEGMENTS, SEGMENTS);
