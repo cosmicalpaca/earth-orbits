@@ -6,6 +6,7 @@ var Store = Model.extend({
             case 'CAMERA-MOVED':
                 this.set({
                     position: attributes.position.toArray().map(c => c.toFixed(2)).toString(),
+                    quaternion: attributes.quaternion.toArray().map(c => c.toFixed(2)).toString(),
                     lookAt: attributes.lookAt.toArray().map(c => c.toFixed(2)).toString(),
                 });
                 break;

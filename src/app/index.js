@@ -1,4 +1,5 @@
 const store = require('./store');
+const _ = require('lodash');
 
 const THREE = require('three');
 const OrbitControls = require('three-orbit-controls')(THREE);
@@ -8,6 +9,7 @@ const Earth = require('./meshes/earth');
 const SurfaceLocation = require('./meshes/surface-location');
 
 const ReactDom = require('react-dom');
+const TWEEN = require('tween.js');
 
 const React = require('react'); // eslint-disable-line no-unused-vars
 const UI = require('./ui'); // eslint-disable-line no-unused-vars
@@ -58,24 +60,41 @@ class App {
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
         this.camera.position.copy(new THREE.Vector3(0, 0, 20));
 
-        this.controls = new OrbitControls(this.camera);
-        this.controls.zoomSpeed = 0.2;
-        this.controls.addEventListener('change', () => this.onControlsUpdate());
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Shift') {
-                (typeof this.__controls === 'undefined') && (this.__controls = true);
-                if (this.__controls) {
-                    this.__controls = false;
-                    this.controls.enabled = false;
-                } else {
-                    this.__controls = true;
-                    this.controls.enabled = true;
-                }
-            }
-        });
+        // this.controls = new OrbitControls(this.camera);
+        // this.controls.zoomSpeed = 0.2;
+        // this.controls.addEventListener('change', () => this.onControlsUpdate());
+        //
+        // document.addEventListener('keydown', (e) => {
+        //     if (e.key === 'Shift') {
+        //         (typeof this.__controls === 'undefined') && (this.__controls = true);
+        //         if (this.__controls) {
+        //             this.__controls = false;
+        //             this.controls.enabled = false;
+        //         } else {
+        //             this.__controls = true;
+        //             this.controls.enabled = true;
+        //         }
+        //     }
+        // });
 
         document.getElementById('webgl-container').appendChild(this.renderer.domElement);
+
+        document.addEventListener('scroll', _.debounce(this.handleScroll.bind(this), 50));
+
+        this.tween = new TWEEN.Tween(this.camera.position)
+            .to({x: 20, y: 20, z: 20}, 1000)
+            .onUpdate(function (x, y, z) {
+                console.log(this.x, this.y, this.z);
+            })
+            .start();
+
+
+        /**
+         * USE TWEEN FUNCTIONS FROM HERE:
+         * https://www.npmjs.com/package/tween-functions
+         *
+         * WITH SCROLL POSITION INSTEAD OF TIME ARGUMENT
+         */
     }
 
     /**
@@ -111,8 +130,9 @@ class App {
     onControlsUpdate() {
         let positionVector = this.camera.position;
         let lookAtVector = new THREE.Vector3(0, 0, -1);
-        lookAtVector.applyQuaternion(this.camera.quaternion);
-        store.dispatch('CAMERA-MOVED', {position: positionVector, lookAt: lookAtVector});
+        let quaternion = this.camera.quaternion;
+        lookAtVector.applyQuaternion(quaternion);
+        store.dispatch('CAMERA-MOVED', {position: positionVector, quaternion: quaternion, lookAt: lookAtVector});
     }
 
     /**
@@ -123,6 +143,7 @@ class App {
         this.drawFrame();
         this.stats.end();
         requestAnimationFrame(this.render.bind(this));
+        TWEEN.update(document.body.scrollTop * 10);
     }
 
     /**
@@ -132,6 +153,17 @@ class App {
         this.controls && this.controls.update();
         this.renderer.render(this.scene, this.camera);
     }
+
+    handleScroll(e) {
+        let scroll = document.body.scrollTop;
+        this.scroll = scroll;
+    }
 }
 
-new App();
+let start = new THREE.Vector3(0, 0, 20);
+let finish = new THREE.Vector3(20, 20, 20);
+
+window.THREE = THREE;
+let app = window.app = new App();
+
+

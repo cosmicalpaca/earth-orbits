@@ -6,6 +6,7 @@ class Display extends React.Component {
         super();
         this.state = {
             position: '',
+            quaternion: '',
             lookAt: '',
         };
     }
@@ -17,6 +18,7 @@ class Display extends React.Component {
     onCameraPositionChange() {
         this.setState({
             position: store.get('position'),
+            quaternion: store.get('quaternion'),
             lookAt: store.get('lookAt'),
         });
     }
@@ -26,6 +28,8 @@ class Display extends React.Component {
             <div className="variables-display">
                 <div>pos:</div>
                 <div>{this.state.position}</div>
+                <div>quaternion:</div>
+                <div>{this.state.quaternion}</div>
                 <div>look at:</div>
                 <div>{this.state.lookAt}</div>
             </div>
