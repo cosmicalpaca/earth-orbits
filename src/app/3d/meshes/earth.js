@@ -26,7 +26,7 @@ class Earth {
         let bumpTexture = loader.load(HD ? 'images/bump_8k.jpg' : 'images/bump_4k.jpg');
         let specTexture = loader.load(HD ? 'images/spec_8k.png' : 'images/spec_4k.png');
 
-        mapTexture.anisotropy = 16;
+        // mapTexture.anisotropy = 16;
 
         let geometry = new THREE.SphereGeometry(radius, SEGMENTS, SEGMENTS);
         let material = new THREE.MeshPhongMaterial({
@@ -36,6 +36,11 @@ class Earth {
             specularMap: specTexture,
             specular: new THREE.Color('grey'),
         });
+
+        // let material = new THREE.MeshBasicMaterial({
+        //     wireframe: true,
+        //     color: 0x2194ce,
+        // });
 
         return new THREE.Mesh(geometry, material);
     }

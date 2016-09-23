@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "backbone-model": "^1.0.10",
+    "invariant": "^2.2.1",
     "lodash": "^4.15.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
@@ -36,6 +37,6 @@
     "tachyons": "^4.5.3",
     "three": "^0.80.1",
     "three-orbit-controls": "^72.0.0",
-    "tween.js": "^16.3.5"
+    "tween-functions": "^1.2.0"
   }
 }

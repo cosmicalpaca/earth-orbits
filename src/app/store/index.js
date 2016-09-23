@@ -1,21 +1,38 @@
 const Model = require('backbone-model').Model;
 
-var Store = Model.extend({
+const INITIALSTATE = {
+    frame: 0,
+};
+
+function reducer(state = INITIALSTATE, action, attributes) {
+    switch (action) {
+        case 'CAMERA-MOVED':
+            return Object.assign({}, state, {
+                position: attributes.position.toArray().map(c => c.toFixed(2)).toString(),
+                quaternion: attributes.quaternion.toArray().map(c => c.toFixed(2)).toString(),
+                lookAt: attributes.lookAt.toArray().map(c => c.toFixed(2)).toString(),
+                target: attributes.target.toArray().map(c => c.toFixed(2)).toString(),
+            });
+
+        case 'FRAME-CHANGED':
+            return Object.assign({}, state, attributes);
+
+        default:
+            return state;
+    }
+}
+
+let Store = Model.extend({
+    initialize: function() {
+        this.set(reducer());
+    },
+
     dispatch: function(action, attributes) {
-        switch (action) {
-            case 'CAMERA-MOVED':
-                this.set({
-                    position: attributes.position.toArray().map(c => c.toFixed(2)).toString(),
-                    quaternion: attributes.quaternion.toArray().map(c => c.toFixed(2)).toString(),
-                    lookAt: attributes.lookAt.toArray().map(c => c.toFixed(2)).toString(),
-                });
-                break;
-            default:
-                throw new Error('Action dispatched on the store does not have a handler');
-        }
+        this.set(reducer(this.attributes, action, attributes));
+        console.log(`STORE: ${_.keys(this.changedAttributes())}`);
     },
 });
 
-var store = new Store();
+let store = new Store();
 
-module.exports = store;
+module.exports = window.store = store;

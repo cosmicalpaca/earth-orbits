@@ -19,8 +19,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const production = process.argv.includes('-p');
 const watch = process.argv.includes('--watch');
 
-const ENTRYPOINT = path.join(__dirname, 'src/index.js');
-const DESTINATION = path.join(__dirname, 'public/build');
 
 function getStylesheetLoader() {
     if (production) {
@@ -31,10 +29,13 @@ function getStylesheetLoader() {
 }
 
 let webpackConfig = {
-    entry: ENTRYPOINT,
+    entry: {
+        app: path.join(__dirname, 'src/index.js'),
+        vendor: ['backbone-model', 'lodash', 'three', 'three-orbit-controls', 'tween.js'],
+    },
     output: {
         filename: 'app.js',
-        path: DESTINATION,
+        path: path.join(__dirname, 'public/build'),
     },
     watch: watch,
     module: {
@@ -78,6 +79,11 @@ let webpackConfig = {
     ],
     plugins: [
         new ExtractTextPlugin(production ? 'app.min.css' : 'app.css'),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            filename: 'vendor.bundle.js',
+            minChunks: Infinity,
+        }),
     ],
 };
 

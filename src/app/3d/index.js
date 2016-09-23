@@ -1,5 +1,7 @@
 const store = require('store');
 const _ = require('lodash');
+const keyframes = require('./lib/keyframes');
+const tweenFunctions = require('tween-functions');
 
 const THREE = require('three');
 const OrbitControls = require('three-orbit-controls')(THREE);
@@ -27,7 +29,10 @@ class App {
             this.initializeScene();
             this.initializeStats();
             this.composeScene();
-            this.render();
+            this.onRequestAnimationFrame();
+
+            store.on('change:keyframe', this.setKeyframe.bind(this));
+            this.setKeyframe();
         });
     }
 
@@ -50,34 +55,25 @@ class App {
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
         this.camera.position.copy(new THREE.Vector3(0, 0, 20));
 
-        // this.controls = new OrbitControls(this.camera);
-        // this.controls.zoomSpeed = 0.2;
-        // this.controls.addEventListener('change', () => this.onControlsUpdate());
-        //
-        // document.addEventListener('keydown', (e) => {
-        //     if (e.key === 'Shift') {
-        //         (typeof this.__controls === 'undefined') && (this.__controls = true);
-        //         if (this.__controls) {
-        //             this.__controls = false;
-        //             this.controls.enabled = false;
-        //         } else {
-        //             this.__controls = true;
-        //             this.controls.enabled = true;
-        //         }
-        //     }
-        // });
+        this.controls = new OrbitControls(this.camera);
+        this.controls.zoomSpeed = 0.2;
+        this.controls.addEventListener('change', () => this.onControlsUpdate());
+        this.controls.enabled = false;
 
-        document.getElementById('webgl-container').appendChild(this.renderer.domElement);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Shift') {
+                (typeof this.__controls === 'undefined') && (this.__controls = true);
+                if (this.__controls) {
+                    this.__controls = false;
+                    this.controls.enabled = false;
+                } else {
+                    this.__controls = true;
+                    this.controls.enabled = true;
+                }
+            }
+        });
 
-        document.addEventListener('scroll', _.debounce(this.handleScroll.bind(this), 50));
-
-        this.tween = new TWEEN.Tween(this.camera.position)
-            .to({x: 20, y: 20, z: 20}, 1000)
-            .onUpdate(function (x, y, z) {
-                console.log(this.x, this.y, this.z);
-            })
-            .start();
-
+        document.querySelector('.webgl-container').appendChild(this.renderer.domElement);
 
         /**
          * USE TWEEN FUNCTIONS FROM HERE:
@@ -118,36 +114,83 @@ class App {
      * When camera is moved, we log the position and rotation
      */
     onControlsUpdate() {
-        let positionVector = this.camera.position;
-        let lookAtVector = new THREE.Vector3(0, 0, -1);
+        let position = this.camera.position;
+        let lookAt = new THREE.Vector3(0, 0, -1);
         let quaternion = this.camera.quaternion;
-        lookAtVector.applyQuaternion(quaternion);
-        store.dispatch('CAMERA-MOVED', {position: positionVector, quaternion: quaternion, lookAt: lookAtVector});
+        lookAt.applyQuaternion(quaternion);
+        let target = this.controls.target;
+
+        store.dispatch('CAMERA-MOVED', {
+            position,
+            quaternion,
+            lookAt,
+            target,
+        });
     }
 
     /**
      * This gets run every request animation frame
      */
-    render() {
+    onRequestAnimationFrame() {
         this.stats.begin();
-        this.drawFrame();
+        this.draw();
         this.stats.end();
-        requestAnimationFrame(this.render.bind(this));
-        TWEEN.update(document.body.scrollTop * 10);
+        requestAnimationFrame(this.onRequestAnimationFrame.bind(this));
+
+        this.updateTweens();
     }
 
-    /**
-     * This actually draws things every frame
-     */
-    drawFrame() {
+    render() {
+        /** Actually draws things **/
         this.controls && this.controls.update();
         this.renderer.render(this.scene, this.camera);
     }
 
-    handleScroll(e) {
+    setKeyframe() {
+        let keyframe = store.get('keyframe');
+        this._tweens = [];
+
+        _.forEach(keyframe.to, (value, path) => {
+            let pathSegments = _.split(path, '_');
+            let prop = pathSegments.pop();
+            let object = this[pathSegments.join('.')];
+
+            this.tweenProperty(object, prop, keyframe.from[path], keyframe.to[path], keyframe.length);
+        });
+    }
+
+    tweenProperty(object, prop, from, to, length) {
+        let fromX = from.x;
+        let fromY = from.y;
+        let fromZ = from.z;
+
+        let toX = to.x;
+        let toY = to.y;
+        let toZ = to.z;
+
+        let fn = function(currentPosition) {
+            let x = tweenFunctions.easeInOutQuad(currentPosition, fromX, toX, length);
+            let y = tweenFunctions.easeInOutQuad(currentPosition, fromY, toY, length);
+            let z = tweenFunctions.easeInOutQuad(currentPosition, fromZ, toZ, length);
+
+            object[prop].x = x;
+            object[prop].y = y;
+            object[prop].z = z;
+        }
+
+        this._tweens.push(fn);
+    }
+
+    updateTweens() {
         let scroll = document.body.scrollTop;
-        this.scroll = scroll;
+        let currentFrame = store.get('keyframe');
+        let currentPosition = scroll - currentFrame.top;
+
+        _.forEach(this._tweens, fn => {
+            fn(currentPosition);
+        });
     }
 }
 
-let app = window.app = new App();
+window.T = THREE;
+window.app = new App();
