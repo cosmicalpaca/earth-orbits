@@ -1,5 +1,5 @@
 const THREE = require('three');
-const c = require('../utils/constants');
+const c = require('constants');
 
 const SEGMENTS = 64;
 const RADIUS = c.earthRadius;

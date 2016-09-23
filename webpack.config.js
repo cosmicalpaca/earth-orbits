@@ -16,14 +16,11 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
  *
  */
 
-const production = (process.argv.indexOf('--production') >= 0);
-const watch = (process.argv.indexOf('--watch') >= 0);
+const production = process.argv.includes('-p');
+const watch = process.argv.includes('--watch');
 
-/** What goes in **/
-const entry = path.join(__dirname, 'src/index.js');
-
-/** Where things are built **/
-const outputDir = path.join(__dirname, 'public');
+const ENTRYPOINT = path.join(__dirname, 'src/index.js');
+const DESTINATION = path.join(__dirname, 'public/build');
 
 function getStylesheetLoader() {
     if (production) {
@@ -34,11 +31,10 @@ function getStylesheetLoader() {
 }
 
 let webpackConfig = {
-    entry: entry,
+    entry: ENTRYPOINT,
     output: {
         filename: 'app.js',
-        path: outputDir,
-        // publicPath: '/public/',
+        path: DESTINATION,
     },
     watch: watch,
     module: {
@@ -51,14 +47,22 @@ let webpackConfig = {
                 test: /\.glsl$/,
                 loader: 'shader',
             },
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules)/,
-                loader: 'babel',
-                query: {
-                    presets: ['latest', 'react'],
-                },
-            },
+            // {
+            //     test: /\.jsx?$/,
+            //     exclude: /(node_modules)/,
+            //     loader: 'babel',
+            //     query: {
+            //         presets: ['react'],
+            //     },
+            // },
+        ],
+    },
+    resolve: {
+        alias: {
+            store: path.resolve('./src/app/store/index.js'),
+        },
+        root: [
+            path.resolve('./src/app/lib'),
         ],
     },
     devtool: production ? '' : 'inline-source-map',

@@ -12,4 +12,5 @@ let UI = React.createClass({
     },
 });
 
+// export default UI;
 module.exports = UI;

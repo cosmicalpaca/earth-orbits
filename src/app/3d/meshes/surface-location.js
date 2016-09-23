@@ -1,5 +1,5 @@
 const THREE = require('three');
-const math = require('../utils/math');
+const math = require('math');
 
 /**
  * Creates a mesh that is on the surface of Earth

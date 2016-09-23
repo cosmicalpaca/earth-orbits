@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "webpack-dev-server --port 3000 --inline --hot",
-    "build": "webpack --production; webpack --production --minified"
+    "build": "webpack -p; webpack -p --minified"
   },
   "author": {
     "name": "Jamie Gilyazetdinov"
@@ -33,6 +33,7 @@
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "stats.js": "^0.16.0",
+    "tachyons": "^4.5.3",
     "three": "^0.80.1",
     "three-orbit-controls": "^72.0.0",
     "tween.js": "^16.3.5"
