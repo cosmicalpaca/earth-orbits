@@ -19,15 +19,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const production = process.argv.includes('-p');
 const watch = process.argv.includes('--watch');
 
-
-function getStylesheetLoader() {
-    if (production) {
-        return 'css-loader!postcss-loader!sass-loader';
-    } else {
-        return 'css-loader?sourceMap!sass-loader?sourceMap';
-    }
-}
-
 let webpackConfig = {
     entry: {
         app: path.join(__dirname, 'src/index.js'),
@@ -40,10 +31,6 @@ let webpackConfig = {
     watch: watch,
     module: {
         loaders: [
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract('style-loader', getStylesheetLoader()),
-            },
             {
                 test: /\.glsl$/,
                 loader: 'shader',
@@ -59,15 +46,7 @@ let webpackConfig = {
     devServer: {
         contentBase: path.join(__dirname, 'public'),
     },
-    postcss: [
-        autoprefixer({
-            browsers: [
-                'last 3 versions',
-            ],
-        }),
-    ],
     plugins: [
-        new ExtractTextPlugin(production ? 'app.min.css' : 'app.css'),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             filename: 'vendor.bundle.js',
