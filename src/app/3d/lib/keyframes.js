@@ -7,6 +7,12 @@ const store = require('store');
 
 let KEYFRAMES = [
     {
+        earth_planet_rotation: new V3(0, 0, 0),
+        earth_clouds_rotation: new V3(0, 0, 0),
+    },
+    {
+        earth_planet_rotation: new V3(0, 0.5, 0),
+        earth_clouds_rotation: new V3(0, 0.5, 0),
         camera_position: new V3(0, 0, 20),
         controls_target: new V3(0, 0, 0),
     }, {
@@ -21,8 +27,10 @@ let KEYFRAMES = [
 class KeyframeController {
     constructor() {
         this.buildKeyframesHash();
-        document.addEventListener('scroll', _.debounce(this.handleScroll.bind(this), 10));
         this._currentKeyframeIndex = null;
+
+        document.addEventListener('scroll', _.debounce(this.handleScroll.bind(this), 10));
+
         this.handleScroll();
     }
 

@@ -1,6 +1,13 @@
+'use strict';
+
 const store = require('store');
 
 let displayElement;
+
+document.addEventListener('DOMContentLoaded', () => {
+    displayElement = document.querySelector('.display');
+    render();
+});
 
 function render() {
     displayElement.innerHTML = `
@@ -10,10 +17,5 @@ function render() {
         <div class='f6'><strong>target</strong>: ${store.get('target') || 0}</div>
     `;
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    displayElement = document.querySelector('.display');
-    render();
-});
 
 store.on('change:position', render);

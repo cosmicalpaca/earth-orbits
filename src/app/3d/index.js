@@ -26,10 +26,11 @@ class App {
             this.initializeScene();
             this.initializeStats();
             this.composeScene();
-            this.onRequestAnimationFrame();
 
             store.on('change:keyframe', this.setKeyframe.bind(this));
             this.setKeyframe();
+
+            this.onRequestAnimationFrame();
         });
     }
 
@@ -146,33 +147,48 @@ class App {
         let keyframe = store.get('keyframe');
         this._tweens = [];
 
-        _.forEach(keyframe.to, (value, path) => {
-            let pathSegments = _.split(path, '_');
-            let prop = pathSegments.pop();
-            let object = this[pathSegments.join('.')];
+        let fromProps = _.keys(keyframe.from);
+        let toProps = _.keys(keyframe.to);
 
-            this.tweenProperty(object, prop, keyframe.from[path], keyframe.to[path], keyframe.length);
+        let propsForBothFrames = _.intersection(fromProps, toProps);
+
+        _.forEach(propsForBothFrames, propString => {
+            let pathSegments = _.split(propString, '_');
+            let prop = pathSegments.pop();
+            let object = _.get(this, `${pathSegments.join('.')}`);
+
+            this.tweenProperty(object, prop, keyframe.from[propString], keyframe.to[propString], keyframe.length);
         });
     }
 
     tweenProperty(object, prop, from, to, length) {
-        let fromX = from.x;
-        let fromY = from.y;
-        let fromZ = from.z;
-
-        let toX = to.x;
-        let toY = to.y;
-        let toZ = to.z;
+        let fromValue = from;
+        let toValue = to;
 
         let fn = function(currentPosition) {
-            let x = tweenFunctions.easeInOutQuad(currentPosition, fromX, toX, length);
-            let y = tweenFunctions.easeInOutQuad(currentPosition, fromY, toY, length);
-            let z = tweenFunctions.easeInOutQuad(currentPosition, fromZ, toZ, length);
+            if (_.isNumber(from)) {
+                let newValue = tweenFunctions.easeInOutQuad(currentPosition, fromValue, toValue, length);
+                _.isFunction(object[prop]) ? object[prop](newValue) : object[prop] = newValue;
+            } else {
+                let x = tweenFunctions.easeInOutQuad(currentPosition, fromValue.x, toValue.x, length);
+                let y = tweenFunctions.easeInOutQuad(currentPosition, fromValue.y, toValue.y, length);
+                let z = tweenFunctions.easeInOutQuad(currentPosition, fromValue.z, toValue.z, length);
 
-            object[prop].x = x;
-            object[prop].y = y;
-            object[prop].z = z;
-        }
+                switch(prop) {
+                    case 'position':
+                    case 'target':
+                        object[prop].x = x;
+                        object[prop].y = y;
+                        object[prop].z = z;
+                        break;
+                    case 'rotation':
+                        object[prop].setFromVector3(new THREE.Vector3(x, y, z));
+                        break;
+                    default:
+                        console.warn(`Specify how to handle "${prop}" property`);
+                }
+            }
+        };
 
         this._tweens.push(fn);
     }
@@ -188,5 +204,5 @@ class App {
     }
 }
 
-window.T = THREE;
+window.T = window.THREE = THREE;
 window.app = new App();

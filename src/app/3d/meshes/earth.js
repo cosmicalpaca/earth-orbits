@@ -12,14 +12,14 @@ const HD = false; // TEMPORARY
 
 class Earth {
     constructor(radius = RADIUS) {
-        this.planet = this.planetMesh(radius);
-        this.clouds = this.cloudsMesh(radius);
+        this.planet = this._makePlanetMesh(radius);
+        this.clouds = this._makeCloudsMesh(radius);
     }
 
     /**
      * Make Mesh for the Planet itself
      */
-    planetMesh(radius) {
+    _makePlanetMesh(radius) {
         let loader = new THREE.TextureLoader();
 
         let mapTexture = loader.load(HD ? 'images/map_8k.jpg' : 'images/map_4k.jpg');
@@ -45,11 +45,13 @@ class Earth {
         return new THREE.Mesh(geometry, material);
     }
 
+
+
     /**
      * Make Mesh for Clouds above. Radius of Sphere
      * created for clouds is a bit bigger then planet's
      */
-    cloudsMesh(radius) {
+    _makeCloudsMesh(radius) {
         radius = radius + 0.05;
 
         let loader = new THREE.TextureLoader();
