@@ -70,14 +70,13 @@ class App {
             }
         });
 
-        document.querySelector('.webgl-container').appendChild(this.renderer.domElement);
+        let grid = new THREE.GridHelper(100, 100);
+        this.scene.add(grid);
 
-        /**
-         * USE TWEEN FUNCTIONS FROM HERE:
-         * https://www.npmjs.com/package/tween-functions
-         *
-         * WITH SCROLL POSITION INSTEAD OF TIME ARGUMENT
-         */
+        let axis = new THREE.AxisHelper(10);
+        this.scene.add(axis);
+
+        document.querySelector('.webgl-container').appendChild(this.renderer.domElement);
     }
 
     /**

@@ -24,7 +24,7 @@ function getStylesheetLoader() {
     if (production) {
         return 'css-loader!postcss-loader!sass-loader';
     } else {
-        return 'css-loader?sourceMap!postcss-loader!sass-loader?sourceMap';
+        return 'css-loader?sourceMap!sass-loader?sourceMap';
     }
 }
 
@@ -48,25 +48,14 @@ let webpackConfig = {
                 test: /\.glsl$/,
                 loader: 'shader',
             },
-            // {
-            //     test: /\.jsx?$/,
-            //     exclude: /(node_modules)/,
-            //     loader: 'babel',
-            //     query: {
-            //         presets: ['react'],
-            //     },
-            // },
         ],
     },
     resolve: {
-        alias: {
-            store: path.resolve('./src/app/store/index.js'),
-        },
         root: [
             path.resolve('./src/app/lib'),
         ],
     },
-    devtool: production ? '' : 'inline-source-map',
+    devtool: production ? '' : 'eval-source-map',
     devServer: {
         contentBase: path.join(__dirname, 'public'),
     },
