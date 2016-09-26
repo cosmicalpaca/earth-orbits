@@ -10,9 +10,6 @@ const Stats = require('stats.js');
 const Earth = require('./meshes/earth');
 const SurfaceLocation = require('./meshes/surface-location');
 
-const TWEEN = require('tween.js');
-
-
 class App {
     constructor() {
         this.loadFonts();
@@ -133,7 +130,7 @@ class App {
      */
     onRequestAnimationFrame() {
         this.stats.begin();
-        this.draw();
+        this.render();
         this.stats.end();
         requestAnimationFrame(this.onRequestAnimationFrame.bind(this));
 

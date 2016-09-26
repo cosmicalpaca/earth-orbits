@@ -31,7 +31,7 @@ function getStylesheetLoader() {
 let webpackConfig = {
     entry: {
         app: path.join(__dirname, 'src/index.js'),
-        vendor: ['backbone-model', 'lodash', 'three', 'three-orbit-controls', 'tween.js'],
+        vendor: ['backbone-model', 'lodash', 'three', 'three-orbit-controls', 'invariant', 'stats.js', 'tween-functions'],
     },
     output: {
         filename: 'app.js',
