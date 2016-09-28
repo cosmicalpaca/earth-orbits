@@ -8,12 +8,13 @@ const math = require('math');
 
 class SurfaceLocation {
     constructor(lat, long, options = {color: 0x99ff99, size: 0.05}) {
-        let mesh = new THREE.Mesh(
-            new THREE.SphereGeometry(options.size, 16, 16),
-            new THREE.MeshBasicMaterial({color: options.color})
-        );
+        let geometry = new THREE.SphereGeometry(options.size, 16, 16);
+        let material = new THREE.MeshBasicMaterial({color: options.color});
 
-        mesh.position.copy(math.latlongToCartesian(lat, long));
+        let p = math.latlongToCartesian(lat, long);
+        geometry.translate(p.x, p.y, p.z);
+        
+        let mesh = new THREE.Mesh(geometry, material);
 
         return mesh;
     }

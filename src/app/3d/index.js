@@ -8,7 +8,6 @@ const OrbitControls = require('three-orbit-controls')(THREE);
 const Stats = require('stats.js');
 
 const Earth = require('./meshes/earth');
-const SurfaceLocation = require('./meshes/surface-location');
 
 class App {
     constructor() {
@@ -100,11 +99,8 @@ class App {
         this.directLight.position.set(5, 3, 5);
         this.scene.add(this.directLight);
 
-        this.earth = new Earth();
-        this.scene.add(this.earth.planet, this.earth.clouds);
-
-        let seattle = new SurfaceLocation(47.60, 122.33);
-        this.scene.add(seattle);
+        this.earth = new Earth().mesh;
+        this.scene.add(this.earth);
     }
 
     /**
@@ -182,7 +178,8 @@ class App {
                         object[prop].z = z;
                         break;
                     case 'rotation':
-                        object[prop].setFromVector3(new THREE.Vector3(x, y, z));
+                        let rotationVector = new THREE.Vector3(x, y, z);
+                        object[prop].setFromVector3(rotationVector);
                         break;
                     default:
                         console.warn(`Specify how to handle "${prop}" property`);

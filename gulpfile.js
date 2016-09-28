@@ -9,11 +9,12 @@ gulp.task('serve', () => {
     browserSync.init({
         server: {
             baseDir: "./public"
-        }
+        },
+        open: false,
     });
 
     gulp.watch('./public/index.html', browserSync.reload);
-    gulp.watch('./src/app/**/*', () => {
+    gulp.watch('./src/app/**/*.js', () => {
         compileJs().then(browserSync.reload);
     });
     gulp.watch('./src/styles/**.scss', ['sass']);
@@ -35,7 +36,9 @@ let compileJs = function() {
     })
 };
 
-gulp.task('webpack', compileJs);
+gulp.task('webpack', (callback) => {
+    compileJs().then(callback);
+});
 
 gulp.task('sass', () => {
     return gulp.src('./src/styles/*scss')

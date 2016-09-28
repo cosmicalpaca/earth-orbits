@@ -1,5 +1,6 @@
 const THREE = require('three');
 const c = require('constants');
+const SurfaceLocation = require('./surface-location');
 
 const SEGMENTS = 64;
 const RADIUS = c.earthRadius;
@@ -12,8 +13,17 @@ const HD = false; // TEMPORARY
 
 class Earth {
     constructor(radius = RADIUS) {
-        this.planet = this._makePlanetMesh(radius);
-        this.clouds = this._makeCloudsMesh(radius);
+        let earth = new THREE.Object3D();
+
+        earth.add(this._makePlanetMesh(radius));
+        earth.add(this._makeCloudsMesh(radius));
+        earth.add(this._makeSeattleMesh());
+
+        this.mesh = earth;
+    }
+
+    _makeSeattleMesh() {
+        return new SurfaceLocation(47.60, 122.33);
     }
 
     /**
