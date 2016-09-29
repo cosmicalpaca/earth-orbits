@@ -1,34 +1,18 @@
-/* eslint-disable camelcase */
-
 const invariant = require('invariant');
 const _ = require('lodash');
-const V3 = require('THREE').Vector3;
 const store = require('store');
 
-let KEYFRAMES = [
-    {
-        earth_rotation: new V3(0, 0, 0),
-    },
-    {
-        earth_rotation: new V3(0, 0.5, 0),
-        camera_position: new V3(0, 0, 20),
-        controls_target: new V3(0, 0, 0),
-    }, {
-        camera_position: new V3(0, -20, 40),
-        controls_target: new V3(20, 20, 0)
-    }, {
-        camera_position: new V3(10, -30, 50),
-        controls_target: new V3(20, 20, 0)
-    }
-];
+const KEYFRAMES = require('./keyframes');
 
+/**
+ * Dispatches an event when new keyframe comes into view
+ */
 class KeyframeController {
     constructor() {
         this.buildKeyframesHash();
-        this._currentKeyframeIndex = null;
+        this.__currentKeyframeIndex = null;
 
         document.addEventListener('scroll', _.debounce(this.handleScroll.bind(this), 10));
-
         this.handleScroll();
     }
 
@@ -45,6 +29,9 @@ class KeyframeController {
                 index: index,
             };
         });
+
+        if (frameElements.length !== KEYFRAMES.length)
+            console.warn(`DOM frames count (${frameElements.length}) is different from Keyframe count (${KEYFRAMES.length})`);
     }
 
     getKeyframeInView(scroll) {
@@ -57,8 +44,8 @@ class KeyframeController {
         let scroll = document.body.scrollTop;
         let keyframe = this.getKeyframeInView(scroll);
 
-        if (this._currentKeyframeIndex !== keyframe.index) {
-            this._currentKeyframeIndex = keyframe.index;
+        if (this.__currentKeyframeIndex !== keyframe.index) {
+            this.__currentKeyframeIndex = keyframe.index;
             store.dispatch('FRAME-CHANGED', {
                 keyframe
             });
@@ -66,6 +53,4 @@ class KeyframeController {
     }
 }
 
-let instance = window.keyframeController = new KeyframeController();
-
-module.exports = window.keyframes = KEYFRAMES;
+module.exports = KeyframeController;

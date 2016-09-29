@@ -1,0 +1,30 @@
+@mixin font-serif() {
+    font-family: 'PT Serif', serif;
+}
+@mixin font-sans-serif() {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+@mixin font-display() {
+    font-family: 'Contrail One', cursive;
+}
+
+h1 {
+    @include font-serif();
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @include font-serif();
+}
+
+p {
+    @include font-sans-serif();
+}
+
+
+
+
+
