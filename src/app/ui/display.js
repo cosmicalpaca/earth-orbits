@@ -6,6 +6,7 @@ let displayElement;
 
 document.addEventListener('DOMContentLoaded', () => {
     displayElement = document.querySelector('.display');
+    displayElement.classList.add('fixed-font');
     render();
 });
 

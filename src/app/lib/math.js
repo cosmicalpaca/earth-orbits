@@ -10,7 +10,7 @@ let math = {};
  * @param lat, in degrees
  * @param long, in degrees
  * @param radius
- * @returns {*|Vector3}
+ * @returns {THREE.Vector3}
  */
 math.latlongToCartesian = function (lat, long, radius = c.earthRadius) {
     lat = lat * Math.PI / 180;
@@ -20,6 +20,10 @@ math.latlongToCartesian = function (lat, long, radius = c.earthRadius) {
         radius * Math.sin(lat) * Math.cos(long),
         radius * Math.sin(lat) * Math.sin(long),
         radius * Math.cos(lat));
+};
+
+math.degree = function (degree) {
+    return (Math.PI / 180) * degree;
 };
 
 module.exports = math;

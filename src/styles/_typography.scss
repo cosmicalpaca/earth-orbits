@@ -7,6 +7,9 @@
 @mixin font-display() {
     font-family: 'Contrail One', cursive;
 }
+@mixin font-fixed() {
+    font-family: 'Inconsolata', monospace;
+}
 
 h1 {
     @include font-serif();
@@ -22,9 +25,29 @@ h6 {
 
 p {
     @include font-sans-serif();
+    font-weight: 600;
 }
 
+.fixed-font {
+    @include font-fixed();
+}
 
+u {
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.75);
+}
+.i {
+    font-style: italic;
+}
 
+.op-75 {
+    opacity: 0.75;
+}
 
+.yellow {
+    color: #ffd700;
+}
 
+.blue {
+    color: #357edd;
+}

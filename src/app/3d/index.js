@@ -2,7 +2,7 @@ const _ = require('lodash');
 const store = require('store');
 const THREE = require('three');
 
-const fonts = require('./fonts');
+const fonts = require('./lib/fonts');
 const scene = require('./lib/scene');
 const stats = require('./lib/stats');
 const lca = require('./lib/lca');
@@ -18,19 +18,21 @@ class App {
 
     loadResources() {
         return fonts.loadFont()
-            .then(font => this.font = font);
     }
 
     initialize() {
         this.addEventListeners();
 
         [this.renderer, this.camera, this.controls] = lca.initialize();
+
         this.scene = new THREE.Scene();
         _.forEach(scene.createSceneObjects(), (object, name) => {
             this.scene.add(object);
             this[name] = object;
         });
+
         this.stats = stats.initialize();
+
         this.kc = new KC();
 
         this.handleRequestAnimationFrame();
@@ -65,7 +67,7 @@ class App {
             let prop = pathSegments.pop();
             let object = _.get(this, `${pathSegments.join('.')}`);
 
-            return tween.createTweenFunction([object, prop, keyframe.from[propString], keyframe.to[propString], keyframe.length]);
+            return tween.createTweenFunction(object, prop, keyframe.from[propString], keyframe.to[propString], keyframe.length);
         });
     }
 

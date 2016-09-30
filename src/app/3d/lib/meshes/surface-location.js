@@ -1,15 +1,30 @@
 const THREE = require('three');
 const math = require('math');
+const c = require('constants');
 
 /**
  * Creates a mesh that is on the surface of Earth
  * at given coordinates
+ *
+ * @returns {THREE.Mesh}
  */
 
 class SurfaceLocation {
-    constructor(lat, long, options = {color: 0x99ff99, size: 0.05}) {
-        let geometry = new THREE.SphereGeometry(options.size, 16, 16);
-        let material = new THREE.MeshBasicMaterial({color: options.color});
+    /**
+     * @param {Number} lat
+     * @param {Number} long
+     * @param {Number} [color]
+     * @param {Number} [size]
+     * @returns {THREE.Mesh}
+     */
+    constructor(lat, long, color = c.white, size = 0.01) {
+        let geometry = new THREE.SphereGeometry(size, 16, 16);
+        let material = new THREE.MeshBasicMaterial({
+            transparent: true,
+            opacity: 1,
+            color: color,
+            depthTest: false,
+        });
 
         let p = math.latlongToCartesian(lat, long);
         geometry.translate(p.x, p.y, p.z);

@@ -2,7 +2,7 @@ html,
 body {
     width: 100%;
     height: 100%;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 .webgl-container,
@@ -24,6 +24,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+
+    &.short {
+        height: 75%;
+    }
 
     h1 {
         font-size: 3rem;
@@ -31,7 +36,15 @@ body {
     }
     h2 {
         font-size: 2rem;
-        line-height: 1.4;
+        line-height: 1.6;
+    }
+    h3 {
+        font-size: 1.6rem;
+        line-height: 1.6;
+    }
+    h4 {
+        font-size: 1.3rem;
+        line-height: 1.6;
     }
     p {
         font-size: 1rem;
