@@ -14,6 +14,8 @@ function initialize() {
         antialias: f.AA,
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    store.dispatch('SET-ANISOTROPY', {maxAnisotropy: renderer.getMaxAnisotropy()});
+    console.info(`Anisotropy is set to ${renderer.getMaxAnisotropy()}`)
     document.querySelector('.webgl-container').appendChild(renderer.domElement);
 
     /** Camera **/

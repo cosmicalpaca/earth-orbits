@@ -1,7 +1,7 @@
 module.exports = {
     AA: false,
     HD: false,
-    anisotropy: false, // 16
+    anisotropy: false,
     HELPERS: true,
     WIREFRAME: false,
 };

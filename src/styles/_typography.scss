@@ -1,3 +1,7 @@
+html {
+    -webkit-font-smoothing: antialiased;
+}
+
 @mixin font-serif() {
     font-family: 'PT Serif', serif;
 }

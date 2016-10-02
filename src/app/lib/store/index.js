@@ -26,6 +26,9 @@ let Store = Model.extend({
             case 'FRAME-CHANGED':
                 return Object.assign({}, state, attributes);
 
+            case 'SET-ANISOTROPY':
+                return Object.assign({}, state, attributes);
+
             default:
                 return state;
         }

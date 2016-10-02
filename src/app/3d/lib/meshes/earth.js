@@ -2,6 +2,7 @@ const THREE = require('three');
 const c = require('constants');
 const f = require('flags');
 const m = require('math');
+const store = require('store');
 const fonts = require('../fonts');
 const SurfaceLocation = require('./surface-location');
 
@@ -82,7 +83,7 @@ class Earth {
         let specTexture = loader.load(f.HD ? 'images/spec_8k.png' : 'images/spec_4k.png');
 
         if (f.anisotropy) {
-            mapTexture.anisotropy = f.anisotropy;
+            mapTexture.anisotropy = store.get('maxAnisotropy');
         }
 
         let geometry = new THREE.SphereGeometry(radius, SEGMENTS, SEGMENTS);
@@ -111,14 +112,14 @@ class Earth {
      * created for clouds is a bit bigger then planet's
      */
     _makeCloudsMesh(radius) {
-        radius = radius + 0.05;
+        radius = radius + 0.02;
 
         let loader = new THREE.TextureLoader();
 
         let map = loader.load(f.HD ? 'images/clouds_8k.jpg' : 'images/clouds_4k.png');
 
         if (f.anisotropy) {
-            map.anisotropy = f.anisotropy;
+            map.anisotropy = store.get('maxAnisotropy');
         }
 
         let geometry = new THREE.SphereGeometry(radius, SEGMENTS, SEGMENTS);
