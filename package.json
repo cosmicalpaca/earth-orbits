@@ -17,7 +17,6 @@
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
     "shader-loader": "^1.2.1",
-    "webpack": "^1.13.2",
     "webpack-dev-server": "^1.15.0"
   },
   "dependencies": {
@@ -26,7 +25,7 @@
     "lodash": "^4.15.0",
     "stats.js": "^0.16.0",
     "tachyons": "^4.5.3",
-    "three": "^0.80.1",
+    "three": "^0.81.2",
     "three-orbit-controls": "^72.0.0",
     "tween-functions": "^1.2.0"
   }

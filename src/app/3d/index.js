@@ -17,13 +17,13 @@ class App {
     }
 
     loadResources() {
-        return fonts.loadFont()
+        return fonts.loadFont();
     }
 
     initialize() {
         this.addEventListeners();
 
-        [this.renderer, this.camera, this.controls] = lca.initialize();
+        [this.renderer, this.camera] = lca.initialize();
 
         this.scene = new THREE.Scene();
         _.forEach(scene.createSceneObjects(), (object, name) => {

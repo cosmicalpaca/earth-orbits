@@ -3,8 +3,10 @@ const c = require('constants');
 const f = require('flags');
 const m = require('math');
 const store = require('store');
-const fonts = require('../fonts');
+
 const SurfaceLocation = require('./surface-location');
+const SurfaceLine = require('./surface-line');
+const Text = require('./text');
 
 const SEGMENTS = 64;
 const RADIUS = c.earthRadius;
@@ -20,56 +22,48 @@ class Earth {
         earth.add(this._makePlanetMesh(radius));
         earth.add(this._makeCloudsMesh(radius));
 
-        let marks = this._makeMarksMesh();
-        earth.add(marks);
+        let seattle = this._makeSeattleMesh();
+        earth.add(seattle);
+        earth.seattle = seattle;
 
-        earth.marks = marks;
+        let nygroup = this._makeNYMesh();
+        earth.add(nygroup);
+        earth.nygroup = nygroup;
+
         return earth;
     }
 
-    _makeMarksMesh() {
-        let city = new SurfaceLocation(47.60, 122.33);
-        let water = new SurfaceLocation(47.90, 125.00);
+    _makeSeattleMesh() {
+        let seattleLocation = m.latlongToCartesian(47.60, 122.33);
+        let seattleWaterLocation = m.latlongToCartesian(47.90, 125.00);
 
-        let connectionGeometry = new THREE.Geometry();
-        connectionGeometry.vertices.push(m.latlongToCartesian(47.60, 122.33));
-        connectionGeometry.vertices.push(m.latlongToCartesian(47.90, 125.00));
+        let city = (new SurfaceLocation(seattleLocation)).mesh;
+        let water = (new SurfaceLocation(seattleWaterLocation)).mesh;
+        let connection = (new SurfaceLine(seattleLocation, seattleWaterLocation)).mesh;
 
-        let connection = new THREE.Line(
-            connectionGeometry,
-            new THREE.LineBasicMaterial({
-                transparent: true,
-                depthTest: false,
-            })
-        );
+        let seattle = new THREE.Object3D();
 
-        let geometry = new THREE.TextGeometry('Seattle', {
-            font: fonts.getFont(),
-            size: 0.1,
-            height: 0.005,
-        });
+        [city, water, connection].forEach(o => seattle.add(o));
 
-        geometry.applyMatrix((new THREE.Matrix4()).makeRotationX(-0.9));
-        geometry.applyMatrix((new THREE.Matrix4()).makeRotationZ(0.5));
+        return seattle;
+    }
 
-        let p = m.latlongToCartesian(47.90, 123.00);
-        p.multiplyScalar(1.01);
-        geometry.translate(p.x, p.y, p.z);
+    _makeNYMesh() {
+        let group = new THREE.Object3D();
 
-        let material = new THREE.MeshBasicMaterial({
-            transparent: true,
-            depthTest: false,
-        });
+        let nyLocation = m.latlongToCartesian(43.36, 72);
+        let bostonLocation = m.latlongToCartesian(45.5, 70);
 
-        let text = new THREE.Mesh(geometry, material);
+        let ny = (new SurfaceLocation(nyLocation)).mesh;
+        group.add(ny);
 
-        let marks = new THREE.Object3D();
-        marks.add(city);
-        marks.add(water);
-        marks.add(connection);
-        marks.add(text);
+        let boston = (new SurfaceLocation(bostonLocation)).mesh;
+        group.add(boston);
 
-        return marks;
+        let connection = (new SurfaceLine(nyLocation, bostonLocation)).mesh;
+        group.add(connection);
+
+        return group;
     }
 
     /**
@@ -104,8 +98,6 @@ class Earth {
 
         return new THREE.Mesh(geometry, material);
     }
-
-
 
     /**
      * Make Mesh for Clouds above. Radius of Sphere

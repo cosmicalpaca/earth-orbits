@@ -18,11 +18,11 @@ function createTweenFunction(object, prop, from, to, length) {
         if (_.isNumber(from)) {
             let newValue = tweenFunctions.easeInOutQuad(currentPosition, from, to, length);
 
-            switch(prop) {
+            switch (prop) {
                 case 'opacity':
                     if (object.children) {
                         object.children.forEach(o => {
-                            o.material.opacity = newValue
+                            o.material.opacity = newValue;
                         });
                     } else {
                         object.material.opacity = newValue;

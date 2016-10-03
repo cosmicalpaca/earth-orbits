@@ -42,7 +42,7 @@ let webpackConfig = {
             path.resolve('./src/app/lib'),
         ],
     },
-    devtool: production ? '' : 'eval-source-map',
+    devtool: production ? '' : 'source-map',
     devServer: {
         contentBase: path.join(__dirname, 'public'),
     },
