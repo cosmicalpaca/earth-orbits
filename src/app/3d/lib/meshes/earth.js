@@ -4,6 +4,9 @@ const f = require('flags');
 const m = require('math');
 const store = require('store');
 
+const vertexShader = require('../shaders/earth/vertex.glsl');
+const fragmentShader = require('../shaders/earth/fragment.glsl');
+
 const SurfaceLocation = require('./surface-location');
 const SurfaceLine = require('./surface-line');
 const Text = require('./text');
@@ -29,6 +32,8 @@ class Earth {
         let ny = this._makeNYMesh();
         earth.add(ny);
         earth.ny = ny;
+
+        if (f.shaders) earth.add(this._shaderGlow(radius));
 
         return earth;
     }
@@ -137,6 +142,47 @@ class Earth {
         material.blending = THREE.AdditiveBlending;
 
         return new THREE.Mesh(geometry, material);
+    }
+
+    _shaderGlow() {
+        const intensity = 0.35;
+        const fade = 10;
+        const color = new THREE.Color(0x93cfef);
+        const viewVector = new THREE.Vector3(-3, 6, 10);
+
+        let material = new THREE.ShaderMaterial(
+            {
+                uniforms: {
+                    c: {
+                        type: "f",
+                        value: intensity,
+                    },
+                    p:{
+                        type: "f",
+                        value: fade,
+                    },
+                    glowColor: {
+                        type: "c",
+                        value: color,
+                    },
+                    viewVector: {
+                        type: "v3",
+                        value: viewVector,
+                    },
+                },
+                vertexShader,
+                fragmentShader,
+                side: THREE.BackSide,
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+            });
+
+        let geometry = new THREE.SphereGeometry(c.earthAtmoshpere, SEGMENTS, SEGMENTS);
+
+        let mesh = new THREE.Mesh(geometry, material);
+        mesh.name = 'glow';
+
+        return mesh;
     }
 }
 

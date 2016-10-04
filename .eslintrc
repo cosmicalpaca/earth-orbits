@@ -63,7 +63,7 @@
         "block-scoped-var": 1, // treat `var` statements as if they were block scoped
         "complexity": 0, // specify the maximum cyclomatic complexity allowed in a program
         "consistent-return": 1, // require `return` statements to either always or never specify values
-        "curly": [2, "multi-line", "consistent"], // specify curly brace conventions for all control statements
+        "curly": [0, "multi-line", "consistent"], // specify curly brace conventions for all control statements
         "default-case": 1, // require `default` case in `switch` statements
         "dot-location": 0, // enforces consistent newlines before or after dots
         "dot-notation": 0, // encourages use of dot notation whenever possible
@@ -209,7 +209,7 @@
         "no-restricted-syntax": 0, // disallow use of certain syntax in code
         "no-spaced-func": 1, // disallow space between function identifier and application (fixable)
         "no-ternary": 0, // disallow the use of ternary operators
-        "no-trailing-spaces": 2, // disallow trailing whitespace at the end of lines (fixable)
+        "no-trailing-spaces": 0, // disallow trailing whitespace at the end of lines (fixable)
         "no-underscore-dangle": 0, // disallow dangling underscores in identifiers
         "no-unneeded-ternary": 0, // disallow the use of ternary operators when a simpler alternative exists
         "object-curly-spacing": [1, "never"], // require or disallow padding inside curly braces (fixable)
@@ -218,7 +218,7 @@
         "operator-linebreak": 0, // enforce operators to be placed before or after line breaks
         "padded-blocks": 0, // enforce padding within blocks
         "quote-props": [1, "as-needed", {"keywords": true}], // require quotes around object literal property names
-        "quotes": [2, "single", "avoid-escape"], // specify whether backticks, double or single quotes should be used (fixable)
+        "quotes": [0, "single", "avoid-escape"], // specify whether backticks, double or single quotes should be used (fixable)
         "require-jsdoc": 0, // Require JSDoc comment
         "semi-spacing": 2, // enforce spacing before and after semicolons
         "semi": [2, "always"], // require or disallow use of semicolons instead of ASI (fixable)

@@ -6,6 +6,7 @@ const fonts = require('./lib/fonts');
 const scene = require('./lib/scene');
 const stats = require('./lib/stats');
 const lca = require('./lib/lca');
+const f = require('flags');
 
 const KC = require('./lib/keyframe-controller');
 const tween = require('./lib/keyframe-controller/tween');
@@ -50,6 +51,7 @@ class App {
     handleRequestAnimationFrame() {
         this.stats.begin();
         this.render();
+        this.updateFixedRelations();
         this.updateCurrentAnimations();
         this.stats.end();
 
@@ -83,6 +85,14 @@ class App {
         let positionInKeyframe = scroll - this.__keyframe.top;
 
         _.forEach(this.tweens, fn => fn(positionInKeyframe));
+    }
+
+    updateFixedRelations() {
+        if (f.shaders) {
+            this.glowVector || (this.glowVector = new THREE.Vector3(0, 0, 0));
+            this.glowVector.copy(this.camera.position).multiplyScalar(-0.5);
+            this.scene.getObjectByName('glow').material.uniforms.viewVector.value = this.glowVector;
+        }
     }
 }
 
