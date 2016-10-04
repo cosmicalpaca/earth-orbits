@@ -23,7 +23,6 @@ class SurfaceLine {
             connectionGeometry,
             new THREE.LineBasicMaterial({
                 transparent: true,
-                depthTest: false,
             })
         );
 

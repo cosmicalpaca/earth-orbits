@@ -47,7 +47,7 @@ class KeyframeController {
         if (this.__currentKeyframeIndex !== keyframe.index) {
             this.__currentKeyframeIndex = keyframe.index;
             store.dispatch('FRAME-CHANGED', {
-                keyframe
+                keyframe,
             });
         }
     }

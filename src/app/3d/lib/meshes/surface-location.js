@@ -18,10 +18,9 @@ class SurfaceLocation {
             transparent: true,
             opacity: 1,
             color: color,
-            depthTest: false,
         });
 
-        geometry.translate(position.x, position.y, position.z);
+        geometry.translate(position.x, position.y, position.z * 1.01);
 
         let mesh = new THREE.Mesh(geometry, material);
 

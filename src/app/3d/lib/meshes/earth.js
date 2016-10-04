@@ -26,26 +26,32 @@ class Earth {
         earth.add(seattle);
         earth.seattle = seattle;
 
-        let nygroup = this._makeNYMesh();
-        earth.add(nygroup);
-        earth.nygroup = nygroup;
+        let ny = this._makeNYMesh();
+        earth.add(ny);
+        earth.ny = ny;
 
         return earth;
     }
 
     _makeSeattleMesh() {
+        let group = new THREE.Object3D();
+
         let seattleLocation = m.latlongToCartesian(47.60, 122.33);
         let seattleWaterLocation = m.latlongToCartesian(47.90, 125.00);
 
-        let city = (new SurfaceLocation(seattleLocation)).mesh;
+        let seattle = (new SurfaceLocation(seattleLocation)).mesh;
+        group.add(seattle);
+
         let water = (new SurfaceLocation(seattleWaterLocation)).mesh;
+        group.add(water);
+
         let connection = (new SurfaceLine(seattleLocation, seattleWaterLocation)).mesh;
+        group.add(connection);
 
-        let seattle = new THREE.Object3D();
+        let text = (new Text.SpriteTextOnSurface('Seattle', 47.60, 120.33)).mesh;
+        group.add(text);
 
-        [city, water, connection].forEach(o => seattle.add(o));
-
-        return seattle;
+        return group;
     }
 
     _makeNYMesh() {
@@ -62,6 +68,14 @@ class Earth {
 
         let connection = (new SurfaceLine(nyLocation, bostonLocation)).mesh;
         group.add(connection);
+
+        let nyLabel = (new Text.SpriteTextOnSurface('New York', 41.75, 71.75)).mesh;
+        group.add(nyLabel);
+
+        let bostonLabel = (new Text.SpriteTextOnSurface('Boston    ', 45.9, 68.5)).mesh;
+        group.add(bostonLabel);
+
+        group.children.forEach(o => o.material.opacity = 0);
 
         return group;
     }
