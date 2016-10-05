@@ -13,7 +13,8 @@ const tween = require('./lib/keyframe-controller/tween');
 
 /**
  * TODO: Color correction as in http://i.stack.imgur.com/pp9zr.jpg
- * (http://stackoverflow.com/questions/10213361/how-can-i-render-an-atmosphere-over-a-rendering-of-the-earth-in-three-js)
+ *
+ * TODO: Webworker for tween calculations. Batch tween application in one operation.
  */
 
 class App {
