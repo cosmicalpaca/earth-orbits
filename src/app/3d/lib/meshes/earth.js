@@ -136,10 +136,10 @@ class Earth {
         let geometry = new THREE.SphereGeometry(radius, SEGMENTS, SEGMENTS);
         let material = new THREE.MeshBasicMaterial({
             map: map,
+            transparent: true,
+            opacity: 0.9,
+            blending: THREE.AdditiveBlending,
         });
-
-        material.transparent = true;
-        material.blending = THREE.AdditiveBlending;
 
         return new THREE.Mesh(geometry, material);
     }
@@ -157,7 +157,7 @@ class Earth {
                         type: "f",
                         value: intensity,
                     },
-                    p:{
+                    p: {
                         type: "f",
                         value: fade,
                     },
