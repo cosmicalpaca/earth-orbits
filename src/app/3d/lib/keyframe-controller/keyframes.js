@@ -29,9 +29,9 @@ module.exports = window.keyframes = [
         camera_rotation: new V3(-20, 20, 0),
     }, {
         camera_position: new V3(10, -30, 50),
-        camera_rotation: new V3(20, 20, 0),
+        camera_rotation: new V3(0, 0, 0),
     }, {
-        camera_position: new V3(10, -30, 50),
-        camera_rotation: new V3(20, 20, 0),
+        camera_position: new V3(50, 0, 50),
+        camera_rotation: new V3(0, 0, 0),
     },
 ];

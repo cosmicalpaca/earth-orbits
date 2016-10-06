@@ -12,7 +12,7 @@ function initialize() {
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     store.dispatch('SET-ANISOTROPY', {maxAnisotropy: renderer.getMaxAnisotropy()});
-    console.info(`Anisotropy is set to ${renderer.getMaxAnisotropy()}`)
+    console.info(`Anisotropy max is set to ${renderer.getMaxAnisotropy()}`)
     document.querySelector('.webgl-container').appendChild(renderer.domElement);
 
     /** Camera **/
