@@ -54,6 +54,7 @@ class App {
         this.render();
         this.updateFixedRelations();
         this.updateCurrentAnimations();
+        this.broadcastMetrics();
         this.stats.end();
 
         requestAnimationFrame(this.handleRequestAnimationFrame.bind(this));
@@ -62,6 +63,13 @@ class App {
     render() {
         this.controls && this.controls.update();
         this.renderer.render(this.scene, this.camera);
+    }
+
+    broadcastMetrics() {
+        store.dispatch('CAMERA-MOVED', {
+            position: this.camera.position,
+            rotation: this.camera.rotation.toVector3(),
+        });
     }
 
     handleKeyframeChange(store, keyframe) {

@@ -18,9 +18,7 @@ let Store = Model.extend({
             case 'CAMERA-MOVED':
                 return Object.assign({}, state, {
                     position: attributes.position.toArray().map(c => c.toFixed(2)).toString(),
-                    quaternion: attributes.quaternion.toArray().map(c => c.toFixed(2)).toString(),
-                    lookAt: attributes.lookAt.toArray().map(c => c.toFixed(2)).toString(),
-                    target: attributes.target.toArray().map(c => c.toFixed(2)).toString(),
+                    rotation: attributes.rotation.toArray().map(c => c.toFixed(2)).toString(),
                 });
 
             case 'FRAME-CHANGED':

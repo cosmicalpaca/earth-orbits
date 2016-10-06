@@ -26,6 +26,7 @@ class KeyframeController {
                 length: frame.offsetHeight,
                 from: KEYFRAMES[index],
                 to: KEYFRAMES[index + 1],
+                easing: frame.dataset.easing,
                 index: index,
             };
         });
