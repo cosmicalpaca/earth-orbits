@@ -48,6 +48,10 @@ body {
         height: 75%;
     }
 
+    &.very-short {
+        height: 50%;
+    }
+
     &.long {
         height: 125%;
     }
@@ -58,10 +62,14 @@ body {
         }
     }
 
+    &.slightly-raised {
+        justify-content: flex-start;
+        padding-top: 40%;
+    }
+
     &.raised {
-        &:last-child {
-            padding-bottom: 30%;
-        }
+        justify-content: flex-start;
+        padding-top: 30%;
     }
 
     &.very-raised {

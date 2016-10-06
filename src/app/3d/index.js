@@ -2,7 +2,6 @@ const _ = require('lodash');
 const store = require('store');
 const THREE = require('three');
 
-const fonts = require('./lib/fonts');
 const scene = require('./lib/scene');
 const stats = require('./lib/stats');
 const lca = require('./lib/lca');
@@ -19,12 +18,7 @@ const tween = require('./lib/keyframe-controller/tween');
 
 class App {
     constructor() {
-        this.loadResources()
-            .then(() => this.initialize());
-    }
-
-    loadResources() {
-        return fonts.loadFont();
+        this.initialize();
     }
 
     initialize() {
@@ -82,6 +76,8 @@ class App {
             let pathSegments = _.split(propString, '_');
             let prop = pathSegments.pop();
             let object = _.get(this, `${pathSegments.join('.')}`);
+
+            if (!object) throw new Error(`Bad object specified for tween`);
 
             return tween.createTweenFunction(object, prop, keyframe.from[propString], keyframe.to[propString], keyframe.length, keyframe.easing);
         });

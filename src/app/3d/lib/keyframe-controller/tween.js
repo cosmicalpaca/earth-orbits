@@ -20,7 +20,7 @@ function createTweenFunction(object, prop, from, to, length, easingFn) {
 
             switch (prop) {
                 case 'opacity':
-                    if (object.children) {
+                    if (object.children.length) {
                         object.children.forEach(o => {
                             o.material.opacity = newValue;
                         });

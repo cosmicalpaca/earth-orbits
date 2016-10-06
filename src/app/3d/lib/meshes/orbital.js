@@ -1,12 +1,15 @@
 const THREE = require('three');
 const c = require('constants');
 
+const SEGMENTS = 128;
+
 class OrbitalLine {
-    constructor(radius, color = c.white) {
-        let geometry = new THREE.RingGeometry(radius * 0.99, radius * 1.01, 32);
+    constructor(radius, color = c.white, width = 0.01) {
+        let geometry = new THREE.RingGeometry(radius - width, radius, SEGMENTS);
 
         let material = new THREE.MeshLambertMaterial({
             color: color,
+            transparent: true,
         });
 
         let mesh = new THREE.Mesh(geometry, material);
@@ -16,11 +19,12 @@ class OrbitalLine {
 }
 
 class OrbitalBand {
-    constructor(innerRadius, outerRadius, color = c.white) {
-        let geometry = new THREE.RingGeometry(innerRadius, outerRadius, 32);
+    constructor(innerRadius, outerRadius, color=c.white) {
+        let geometry = new THREE.RingGeometry(innerRadius, outerRadius, SEGMENTS);
 
         let material = new THREE.MeshLambertMaterial({
             color: color,
+            transparent: true,
         });
 
         let mesh = new THREE.Mesh(geometry, material);
@@ -30,6 +34,6 @@ class OrbitalBand {
 }
 
 module.exports = {
-    line: OrbitalLine,
-    band: OrbitalBand,
+    Line: OrbitalLine,
+    Band: OrbitalBand,
 };

@@ -3,6 +3,8 @@ let c = {};
 c.earthRadius = 6.371;
 c.earthAtmoshpere = c.earthRadius + 0.050;
 
+c.karmanLine = c.earthRadius + 0.100;
+
 c.leoLower = c.earthRadius + 0.160;
 c.leoUpper = c.earthRadius + 2;
 

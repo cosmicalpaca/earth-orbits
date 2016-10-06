@@ -27,10 +27,25 @@ module.exports = window.keyframes = [
     }, { /** Big title **/
         camera_position: new V3(6.5, 4.4, 4.5),
         camera_rotation: new V3(0, m.degree(20), 0),
-    }, {
+    }, { /** Quote **/
+        camera_position: new V3(6.6, 4.42, 4.5),
+        camera_rotation: new V3(0, m.degree(15), 0),
+        karmanline_opacity: 0,
+        karmanband_opacity: 0,
+    }, { /** Karman Line **/
+        camera_position: new V3(6.6, 4.32, 3.5),
+        camera_rotation: new V3(0, m.degree(15), m.degree(-52)),
+        karmanline_opacity: 1,
+        karmanband_opacity: 0.25,
+    }, { /** Karman Line **/
+        camera_position: new V3(8.6, 4.42, 8.5),
+        camera_rotation: new V3(m.degree(10), m.degree(48), 0),
+        karmanline_opacity: 1,
+        karmanband_opacity: 0.25,
+    }, { /** Top view **/
         camera_position: new V3(0, 50, 0),
         camera_rotation: new V3(-1.57, 0, 0),
-    }, {
+    }, { /** Side view **/
         camera_position: new V3(0, 0, 50),
         camera_rotation: new V3(0, 0, 0),
     },

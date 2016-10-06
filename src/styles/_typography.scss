@@ -17,6 +17,7 @@ html {
 
 h1 {
     @include font-serif();
+    margin: 0;
 }
 
 h2,
