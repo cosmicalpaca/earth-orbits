@@ -16,6 +16,9 @@ class SurfaceLine {
     constructor(from, to, color = c.white, width = 1) {
         let connectionGeometry = new THREE.Geometry();
 
+        from.z = from.z * 1.01;
+        to.z = to.z * 1.01;
+
         connectionGeometry.vertices.push(from);
         connectionGeometry.vertices.push(to);
 

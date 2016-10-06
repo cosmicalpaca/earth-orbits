@@ -83,7 +83,7 @@ class App {
             let prop = pathSegments.pop();
             let object = _.get(this, `${pathSegments.join('.')}`);
 
-            return tween.createTweenFunction(object, prop, keyframe.from[propString], keyframe.to[propString], keyframe.length);
+            return tween.createTweenFunction(object, prop, keyframe.from[propString], keyframe.to[propString], keyframe.length, keyframe.easing);
         });
     }
 

@@ -62,3 +62,16 @@ u {
 .left-aligned {
     text-align: left;
 }
+
+.pad-top-1 { padding-top: 1rem; }
+.pad-top-2 { padding-top: 2rem; }
+.pad-top-3 { padding-top: 3rem; }
+.pad-top-4 { padding-top: 4rem; }
+.pad-top-5 { padding-top: 5rem; }
+
+blockquote {
+    @include font-serif();
+    font-size: 1.3rem;
+    line-height:1.6rem;
+    padding: 0.8rem 0;
+}

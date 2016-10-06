@@ -137,7 +137,7 @@ class Earth {
         let material = new THREE.MeshBasicMaterial({
             map: map,
             transparent: true,
-            opacity: 0.9,
+            opacity: 0.7,
             blending: THREE.AdditiveBlending,
         });
 

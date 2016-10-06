@@ -12,11 +12,11 @@ const tweenFunctions = require('tween-functions');
  * @param length
  * @returns {Function}
  */
-function createTweenFunction(object, prop, from, to, length) {
+function createTweenFunction(object, prop, from, to, length, easingFn) {
     return function(currentPosition) {
 
         if (_.isNumber(from)) {
-            let newValue = tweenFunctions.easeInOutQuad(currentPosition, from, to, length);
+            let newValue = tweenFunctions[easingFn](currentPosition, from, to, length);
 
             switch (prop) {
                 case 'opacity':
@@ -30,9 +30,9 @@ function createTweenFunction(object, prop, from, to, length) {
                     return;
             }
         } else {
-            let x = tweenFunctions.easeInOutQuad(currentPosition, from.x, to.x, length);
-            let y = tweenFunctions.easeInOutQuad(currentPosition, from.y, to.y, length);
-            let z = tweenFunctions.easeInOutQuad(currentPosition, from.z, to.z, length);
+            let x = tweenFunctions[easingFn](currentPosition, from.x, to.x, length);
+            let y = tweenFunctions[easingFn](currentPosition, from.y, to.y, length);
+            let z = tweenFunctions[easingFn](currentPosition, from.z, to.z, length);
 
             switch (prop) {
                 case 'position':
