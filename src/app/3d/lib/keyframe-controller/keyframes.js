@@ -35,9 +35,9 @@ module.exports = window.keyframes = [
         camera_position: new V3(6.6, 4.32, 3.5),
         camera_rotation: new V3(0, m.degree(15), m.degree(-53)),
         karman_opacity: 1,
-    }, { /** Karman Line **/
-        camera_position: new V3(8.6, 4.42, 8.5),
-        camera_rotation: new V3(m.degree(10), m.degree(48), 0),
+    }, { /** Karman Line Zoom In **/
+        camera_position: new V3(6.6, 4.32, 0.5),
+        camera_rotation: new V3(m.degree(-5), m.degree(35), m.degree(-49)),
         karman_opacity: 1,
     }, { /** Top view **/
         camera_position: new V3(0, 50, 0),

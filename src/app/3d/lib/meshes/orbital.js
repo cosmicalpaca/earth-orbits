@@ -63,8 +63,7 @@ class OrbitMeasurement {
         this.size = size;
 
         mesh.translateOnAxis(new THREE.Vector3(1, -0.01, 0), outerRadius + 0.15);
-        mesh.rotation.setFromVector3(new THREE.Vector3(0,0, m.degree(-45)));
-        mesh.name = 'legend';
+        mesh.rotation.setFromVector3(new THREE.Vector3(0, 0, m.degree(-45)));
 
         return mesh;
     }
