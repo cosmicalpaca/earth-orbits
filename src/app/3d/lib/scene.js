@@ -1,6 +1,7 @@
 const THREE = require('three');
 const Earth = require('./meshes/earth');
 const Karman = require('./meshes/karman');
+const ISS = require('./meshes/iss');
 const f = require('flags');
 
 function createSceneObjects() {
@@ -24,6 +25,8 @@ function createSceneObjects() {
     objects.karman = new Karman();
 
     objects.earth = new Earth();
+
+    objects.iss = new ISS();
 
     return objects;
 }

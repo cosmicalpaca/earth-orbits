@@ -24,14 +24,18 @@ class App {
     }
 
     initialize() {
+        this.dynamicObjects = [];
+        this.tweens = [];
+
         this.addEventListeners();
 
         [this.renderer, this.camera] = lca.initialize();
 
         this.scene = new THREE.Scene();
         _.forEach(scene.createSceneObjects(), (object, name) => {
-            this.scene.add(object);
+            this.scene.add(object.mesh ? object.mesh : object);
             this[name] = object;
+            if (object.update) this.dynamicObjects.push(name);
         });
 
         this.stats = stats.initialize();
@@ -51,6 +55,7 @@ class App {
         this.updateFixedRelations();
         this.updateCurrentAnimations();
         this.broadcastMetrics();
+        this.updateDynamicObjects();
         this.stats.end();
 
         requestAnimationFrame(this.handleRequestAnimationFrame.bind(this));
@@ -66,6 +71,12 @@ class App {
             position: this.camera.position,
             rotation: this.camera.rotation.toVector3(),
         });
+    }
+
+    updateDynamicObjects() {
+        if (this.dynamicObjects.length) {
+            this.dynamicObjects.map(name => this[name].update());
+        }
     }
 
     handleKeyframeChange(store, keyframe) {

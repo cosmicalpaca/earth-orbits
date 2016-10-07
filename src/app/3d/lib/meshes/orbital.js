@@ -50,7 +50,7 @@ class OrbitMeasurement {
 
     _makeLine(innerRadius, outerRadius) {
         let length = outerRadius - innerRadius;
-        let {mesh} = new Line(new THREE.Vector3(0, 0, 0), new THREE.Vector3(length, 0, 0));
+        let {mesh} = new Line.Solid([new THREE.Vector3(0, 0, 0), new THREE.Vector3(length, 0, 0)]);
 
         mesh.geometry.translate(innerRadius, 0, 0);
 
@@ -73,7 +73,7 @@ class OrbitMeasurement {
         let length = this.size;
         let endPointPosition = direction.multiplyScalar(length);
 
-        let {mesh} = (new Line(new THREE.Vector3(0, 0, 0), endPointPosition));
+        let {mesh} = (new Line.Solid([new THREE.Vector3(0, 0, 0), endPointPosition]));
 
         mesh.geometry.translate(outerRadius, 0, 0);
 

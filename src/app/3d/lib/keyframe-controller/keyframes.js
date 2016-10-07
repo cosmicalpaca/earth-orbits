@@ -39,20 +39,19 @@ module.exports = window.keyframes = [
         camera_position: new V3(6.6, 4.32, 0.5),
         camera_rotation: new V3(m.degree(-5), m.degree(35), m.degree(-49)),
         karman_opacity: 1,
-    }, { /** Fast flyover 1 **/
+    }, { /** Fast flyover **/
         camera_position: new V3(4.5, 4.32, -5.5),
         camera_rotation: new V3(m.degree(-45), m.degree(65), m.degree(-30)),
         karman_opacity: 1,
-    }, { /** Fast flyover 2 **/
+    }, { /** ISS View **/
         camera_position: new V3(4.5, 4.32, -5.5),
-        camera_rotation: new V3(m.degree(-45), m.degree(85), m.degree(-30)),
+        camera_rotation: new V3(m.degree(-45), m.degree(65), m.degree(-30)),
+        karman_opacity: 1,
     }, { /** Top view **/
         camera_position: new V3(0, 50, 0),
         camera_rotation: new V3(-1.57, 0, 0),
-        karman_opacity: 1,
     }, { /** Side view **/
         camera_position: new V3(0, 0, 50),
         camera_rotation: new V3(0, 0, 0),
-        karman_opacity: 1,
     },
 ];

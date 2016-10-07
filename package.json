@@ -23,6 +23,7 @@
     "backbone-model": "^1.0.10",
     "invariant": "^2.2.1",
     "lodash": "^4.15.0",
+    "sgp4": "^1.0.10",
     "stats.js": "^0.16.0",
     "tachyons": "^4.5.3",
     "three": "^0.81.2",
