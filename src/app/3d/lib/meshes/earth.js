@@ -56,6 +56,8 @@ class Earth {
         let text = (new Text.SpriteTextOnSurface('Seattle', 47.60, 120.33)).mesh;
         group.add(text);
 
+        group.children.forEach(o => o.material.opacity = 0);
+
         return group;
     }
 

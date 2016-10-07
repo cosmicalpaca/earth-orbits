@@ -1,9 +1,7 @@
 const THREE = require('three');
 const Earth = require('./meshes/earth');
-const Orbital = require('./meshes/orbital');
+const Karman = require('./meshes/karman');
 const f = require('flags');
-const c = require('constants');
-const m = require('math');
 
 function createSceneObjects() {
     let objects = {};
@@ -25,15 +23,7 @@ function createSceneObjects() {
 
     objects.earth = new Earth();
 
-    let karmanline = (new Orbital.Line(c.karmanLine)).mesh;
-    karmanline.material.opacity = 0;
-    karmanline.rotateY(m.degree(25));
-    objects.karmanline = karmanline;
-
-    let karmanband = (new Orbital.Band(c.earthRadius, c.karmanLine)).mesh;
-    karmanband.material.opacity = 0;
-    karmanband.rotateY(m.degree(25));
-    objects.karmanband = karmanband;
+    objects.karman = new Karman();
 
     return objects;
 }

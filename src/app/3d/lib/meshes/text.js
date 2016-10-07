@@ -12,33 +12,33 @@ const m = require('math');
 class TextOnCanvas {
     /**
      * @param {String} text       - Text to write
-     * @param {Number} [fontSize] - Size of the font. Default: 8
+     * @param {Number} [fontSize] - Size of the font. Default: 6
      */
     constructor(text, fontSize = 6) {
-        this.canvas = document.createElement('canvas');
-        this.size = 0.05 * fontSize;
+        this._canvas = document.createElement('canvas');
+        this._size = 0.05 * fontSize;
 
         const DRAWING_SIZE = 64; // Drawing size essentially determines crispiness of resulting font
         const font = `bold ${DRAWING_SIZE}px sans-serif`;
 
-        let context = this.canvas.getContext('2d');
+        let context = this._canvas.getContext('2d');
 
         context.font = font;
 
-        this.canvas.width = context.measureText(text).width;
-        this.canvas.height = DRAWING_SIZE;
+        this._canvas.width = context.measureText(text).width;
+        this._canvas.height = DRAWING_SIZE;
 
         context.font = font; // Because font size is reset after size change
 
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         context.fillStyle = 'white';
-        context.fillText(text, this.canvas.width / 2, this.canvas.height / 2);
+        context.fillText(text, this._canvas.width / 2, this._canvas.height / 2);
 
         context.strokeStyle = 'white';
-        context.strokeText(text, this.canvas.width / 2, this.canvas.height / 2);
+        context.strokeText(text, this._canvas.width / 2, this._canvas.height / 2);
 
-        this.texture = new THREE.Texture(this.canvas);
+        this.texture = new THREE.Texture(this._canvas);
         this.texture.needsUpdate = true;
     }
 }
@@ -57,7 +57,7 @@ class SpriteText extends TextOnCanvas {
         });
 
         let sprite = new THREE.Sprite(material);
-        sprite.scale.set(this.size, this.size * (this.canvas.height / this.canvas.width), 100);
+        sprite.scale.set(this._size, this._size * (this._canvas.height / this._canvas.width), 100);
 
         this.mesh = sprite;
     }
@@ -76,9 +76,9 @@ class PlaneText extends TextOnCanvas {
             transparent: true,
         });
 
-        let geometry = new THREE.PlaneGeometry(this.size, this.size * (this.canvas.height / this.canvas.width), 1, 1);
+        let geometry = new THREE.PlaneGeometry(this._size, this._size * (this._canvas.height / this._canvas.width), 1, 1);
 
-        this.mesh = THREE.Mesh(geometry, material);
+        this.mesh = new THREE.Mesh(geometry, material);
     }
 }
 

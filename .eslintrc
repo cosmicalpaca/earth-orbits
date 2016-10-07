@@ -101,7 +101,7 @@
         "no-process-env": 0, // disallow use of `process.env`
         "no-proto": 2, // disallow usage of `__proto__` property
         "no-redeclare": 1, // disallow declaring the same variable more than once (recommended)
-        "no-return-assign": 2, // disallow use of assignment in `return` statement
+        "no-return-assign": 1, // disallow use of assignment in `return` statement
         "no-script-url": 2, // disallow use of `javascript:` urls.
         "no-self-compare": 2, // disallow comparisons where both sides are exactly the same
         "no-sequences": 1, // disallow use of the comma operator
@@ -192,7 +192,7 @@
         "max-nested-callbacks": 0, // specify the maximum depth callbacks can be nested
         "max-params": 0, // limits the number of parameters that can be used in the function declaration.
         "max-statements": 0, // specify the maximum number of statement allowed in a function
-        "new-cap": [1, {"capIsNewExceptions": [ "$.Deferred"]} ], // require a capital letter for constructors
+        "new-cap": [2, {"capIsNewExceptions": [ "$.Deferred"]} ], // require a capital letter for constructors
         "new-parens": 2, // disallow the omission of parentheses when invoking a constructor with no arguments
         "newline-after-var": 0, // require or disallow an empty newline after variable declarations
         "no-array-constructor": 2, // disallow use of the `Array` constructor

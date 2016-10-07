@@ -14,6 +14,8 @@ const tween = require('./lib/keyframe-controller/tween');
  * TODO: Color correction as in http://i.stack.imgur.com/pp9zr.jpg
  *
  * TODO: Webworker for tween calculations. Batch tween application in one operation.
+ *
+ * TODO: Refactor to use object names to find objects to tween
  */
 
 class App {

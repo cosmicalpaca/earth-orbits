@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const THREE = require('THREE');
 const tweenFunctions = require('tween-functions');
+const h = require('helpers');
 
 /**
  * Creates a function that approximates value to a given one
@@ -10,6 +11,7 @@ const tweenFunctions = require('tween-functions');
  * @param from
  * @param to
  * @param length
+ * @param easingFn
  * @returns {Function}
  */
 function createTweenFunction(object, prop, from, to, length, easingFn) {
@@ -20,13 +22,7 @@ function createTweenFunction(object, prop, from, to, length, easingFn) {
 
             switch (prop) {
                 case 'opacity':
-                    if (object.children.length) {
-                        object.children.forEach(o => {
-                            o.material.opacity = newValue;
-                        });
-                    } else {
-                        object.material.opacity = newValue;
-                    }
+                    h.setOpacity(object, newValue);
                     return;
             }
         } else {
@@ -51,7 +47,6 @@ function createTweenFunction(object, prop, from, to, length, easingFn) {
         console.warn(`Specify how to handle "${prop}" property`);
     };
 }
-
 
 module.exports = {
     createTweenFunction,
