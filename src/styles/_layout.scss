@@ -44,17 +44,10 @@ body {
     padding: 0 4vw;
     color: #fff;
 
-    &.short {
-        height: 75%;
-    }
-
-    &.very-short {
-        height: 50%;
-    }
-
-    &.long {
-        height: 125%;
-    }
+    &.short { height: 75%; }
+    &.very-short { height: 50%; }
+    &.long { height: 125%; }
+    &.very-long { height: 150%; }
 
     &.lowered {
         &:first-child {
