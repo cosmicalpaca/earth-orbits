@@ -21,9 +21,9 @@ function createSceneObjects() {
     pointLight.position.set(0, 15, -30);
     objects.pointLight = pointLight;
 
-    objects.earth = new Earth();
-
     objects.karman = new Karman();
+
+    objects.earth = new Earth();
 
     return objects;
 }

@@ -16,7 +16,7 @@ class TextOnCanvas {
      */
     constructor(text, fontSize = 6) {
         this._canvas = document.createElement('canvas');
-        this._size = 0.05 * fontSize;
+        this.size = 0.05 * fontSize;
 
         const DRAWING_SIZE = 64; // Drawing size essentially determines crispiness of resulting font
         const font = `bold ${DRAWING_SIZE}px sans-serif`;
@@ -38,8 +38,8 @@ class TextOnCanvas {
         context.strokeStyle = 'white';
         context.strokeText(text, this._canvas.width / 2, this._canvas.height / 2);
 
-        this.texture = new THREE.Texture(this._canvas);
-        this.texture.needsUpdate = true;
+        this._texture = new THREE.Texture(this._canvas);
+        this._texture.needsUpdate = true;
     }
 }
 
@@ -51,13 +51,13 @@ class SpriteText extends TextOnCanvas {
         super(text, size);
 
         let material = new THREE.SpriteMaterial({
-            map: this.texture,
+            map: this._texture,
             transparent: true,
             color: 0xffffff,
         });
 
         let sprite = new THREE.Sprite(material);
-        sprite.scale.set(this._size, this._size * (this._canvas.height / this._canvas.width), 100);
+        sprite.scale.set(this.size, this.size * (this._canvas.height / this._canvas.width), 100);
 
         this.mesh = sprite;
     }
@@ -71,12 +71,12 @@ class PlaneText extends TextOnCanvas {
         super(text, size);
 
         let material = new THREE.MeshBasicMaterial({
-            map: this.texture,
+            map: this._texture,
             color: 0xffffff,
             transparent: true,
         });
 
-        let geometry = new THREE.PlaneGeometry(this._size, this._size * (this._canvas.height / this._canvas.width), 1, 1);
+        let geometry = new THREE.PlaneGeometry(this.size, this.size * (this._canvas.height / this._canvas.width), 1, 1);
 
         this.mesh = new THREE.Mesh(geometry, material);
     }
