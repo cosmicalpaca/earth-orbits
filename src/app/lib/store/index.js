@@ -21,6 +21,9 @@ let Store = Model.extend({
                     rotation: attributes.rotation.toArray().map(c => c.toFixed(2)).toString(),
                 });
 
+            case 'CONTROLS-ENABLED':
+                return Object.assign({}, state, attributes);
+
             case 'FRAME-CHANGED':
                 return Object.assign({}, state, attributes);
 

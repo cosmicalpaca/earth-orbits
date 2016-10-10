@@ -16,6 +16,8 @@ const tween = require('./lib/keyframe-controller/tween');
  * TODO: Webworker for tween calculations. Batch tween application in one operation.
  *
  * TODO: Refactor to use object names to find objects to tween
+ *
+ * TODO: Add vignette filter
  */
 
 class App {
@@ -47,6 +49,10 @@ class App {
 
     addEventListeners() {
         store.on('change:keyframe', this.handleKeyframeChange.bind(this));
+        store.on('change:controls', () => {
+            this.controls = store.get('controls');
+            this.tweens = [];
+        });
     }
 
     handleRequestAnimationFrame() {
@@ -86,6 +92,8 @@ class App {
         let propsForBothFrames = _.intersection(_.keys(keyframe.from), _.keys(keyframe.to));
 
         this.tweens = propsForBothFrames.map(propString => {
+            if (this.controls && propString.includes('camera')) return _.noop;
+
             let pathSegments = _.split(propString, '_');
             let prop = pathSegments.pop();
             let object = _.get(this, `${pathSegments.join('.')}`);

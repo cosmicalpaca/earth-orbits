@@ -1,8 +1,11 @@
 const THREE = require('three');
 const store = require('store');
 const f = require('flags');
+const OrbitControls = require('three-orbit-controls')(THREE);
 
 /** Light Camera Action **/
+
+const CONTROLS_KILLSWITCH = false;
 
 function initialize() {
 
@@ -25,6 +28,16 @@ function initialize() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
     });
+
+    if (!CONTROLS_KILLSWITCH) {
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Shift') {
+                let controls = new OrbitControls(camera);
+                controls.zoomSpeed = 0.2;
+                store.dispatch('CONTROLS-ENABLED', {controls});
+            }
+        });
+    }
 
     return [renderer, camera];
 }
