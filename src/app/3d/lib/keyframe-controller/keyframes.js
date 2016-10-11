@@ -8,22 +8,22 @@ module.exports = window.keyframes = [
         earth_rotation: new V3(0, -2, 0),
         camera_position: new V3(-3000, 6000, 10000),
         camera_rotation: new V3(m.degree(9), 0, m.degree(19)),
-        earth_seattle_opacity: 0,
+        seattle_opacity: 0,
     }, { /** Focus on Seattle **/
         earth_rotation: new V3(0, 0, 0),
         camera_position: new V3(-3000, 4000, 10000),
         camera_rotation: new V3(m.degree(2), 0, m.degree(19)),
-        earth_seattle_opacity: 1,
-        earth_ny_opacity: 0,
+        seattle_opacity: 1,
+        ny_opacity: 0,
     }, { /** Focus on New York **/
         camera_position: new V3(4000, 5000, 7000),
         camera_rotation: new V3(m.degree(-10), m.degree(46), 0),
-        earth_seattle_opacity: 0,
-        earth_ny_opacity: 1,
+        seattle_opacity: 0,
+        ny_opacity: 1,
     }, { /** Flyover of earth **/
         camera_position: new V3(6000, 4400, 4000),
         camera_rotation: new V3(m.degree(0), m.degree(60), 0),
-        earth_ny_opacity: 0,
+        ny_opacity: 0,
     }, { /** Big title **/
         camera_position: new V3(6500, 4400, 4500),
         camera_rotation: new V3(0, m.degree(20), 0),
@@ -48,10 +48,10 @@ module.exports = window.keyframes = [
         camera_rotation: new V3(m.degree(-45), m.degree(65), m.degree(-30)),
         karman_opacity: 1,
     }, { /** Top view **/
-        camera_position: new V3(0, 5000, 0),
+        camera_position: new V3(0, 50000, 0),
         camera_rotation: new V3(-1.57, 0, 0),
     }, { /** Side view **/
-        camera_position: new V3(0, 0, 5000),
+        camera_position: new V3(0, 0, 50000),
         camera_rotation: new V3(0, 0, 0),
     },
 ];

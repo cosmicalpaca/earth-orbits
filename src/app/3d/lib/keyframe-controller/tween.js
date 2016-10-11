@@ -14,13 +14,13 @@ const h = require('helpers');
  * @param easingFn
  * @returns {Function}
  */
-function createTweenFunction(object, prop, from, to, length, easingFn) {
+function createTweenFunction(object, propName, from, to, length, easingFn) {
     return function(currentPosition) {
 
         if (_.isNumber(from)) {
             let newValue = tweenFunctions[easingFn](currentPosition, from, to, length);
 
-            switch (prop) {
+            switch (propName) {
                 case 'opacity':
                     h.setOpacity(object, newValue);
                     return;
@@ -30,21 +30,21 @@ function createTweenFunction(object, prop, from, to, length, easingFn) {
             let y = tweenFunctions[easingFn](currentPosition, from.y, to.y, length);
             let z = tweenFunctions[easingFn](currentPosition, from.z, to.z, length);
 
-            switch (prop) {
+            switch (propName) {
                 case 'position':
                 case 'target':
-                    object[prop].x = x;
-                    object[prop].y = y;
-                    object[prop].z = z;
+                    object[propName].x = x;
+                    object[propName].y = y;
+                    object[propName].z = z;
                     return;
 
                 case 'rotation':
                     let rotationVector = new THREE.Vector3(x, y, z);
-                    object[prop].setFromVector3(rotationVector);
+                    object[propName].setFromVector3(rotationVector);
                     return;
             }
         }
-        console.warn(`Specify how to handle "${prop}" property`);
+        console.warn(`Specify how to handle "${propName}" property`);
     };
 }
 

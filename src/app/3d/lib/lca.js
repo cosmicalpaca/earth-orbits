@@ -19,7 +19,9 @@ function initialize() {
     document.querySelector('.webgl-container').appendChild(renderer.domElement);
 
     /** Camera **/
-    let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 10, 100000);
+    let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000000);
+    camera.position.set(10000, 10000, 10000);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     window.addEventListener('resize', () => {
         renderer.setSize(window.innerWidth, window.innerHeight);

@@ -13,10 +13,10 @@ class SurfaceLocation {
      * @param {Number} [size]
      */
     constructor(position, color = c.white, size = 10) {
-        let geometry = new THREE.SphereGeometry(size, 16, 16);
+        let geometry = new THREE.SphereGeometry(size, 6, 6);
         let material = new THREE.MeshBasicMaterial({
             transparent: true,
-            opacity: 1,
+            depthTest: false,
             color: color,
         });
 

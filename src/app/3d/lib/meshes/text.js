@@ -16,7 +16,7 @@ class TextOnCanvas {
      */
     constructor(text, fontSize = 6) {
         this._canvas = document.createElement('canvas');
-        this.size = 0.05 * fontSize;
+        this.size = 50 * fontSize;
 
         const DRAWING_SIZE = 64; // Drawing size essentially determines crispiness of resulting font
         const font = `bold ${DRAWING_SIZE}px sans-serif`;
@@ -72,11 +72,10 @@ class PlaneText extends TextOnCanvas {
 
         let material = new THREE.MeshBasicMaterial({
             map: this._texture,
-            color: 0xffffff,
             transparent: true,
         });
 
-        let geometry = new THREE.PlaneGeometry(this.size, this.size * (this._canvas.height / this._canvas.width), 1, 1);
+        let geometry = new THREE.PlaneGeometry(this.size, this.size * (this._canvas.height / this._canvas.width));
 
         this.mesh = new THREE.Mesh(geometry, material);
     }

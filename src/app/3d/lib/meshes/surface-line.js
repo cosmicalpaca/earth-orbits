@@ -27,7 +27,7 @@ class SurfaceLine {
             connectionGeometry,
             new THREE.LineBasicMaterial({
                 transparent: true,
-                color: 0x00ff00
+                color: color,
             })
         );
 

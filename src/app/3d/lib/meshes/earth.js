@@ -21,19 +21,18 @@ class Earth {
         let earth = new THREE.Object3D();
 
         earth.add(this._makePlanetMesh(c.earthRadius));
-        earth.add(this._makeCloudsMesh(c.earthRadius + c.earthAtmoshpere));
+        earth.add(this._makeCloudsMesh(c.earthAtmoshpere));
+        earth.name = 'earth';
 
         let seattle = this._makeSeattleMesh();
         earth.add(seattle);
-        earth.seattle = seattle;
 
         let ny = this._makeNYMesh();
         earth.add(ny);
-        earth.ny = ny;
 
         if (f.shaders) earth.add(this._shaderGlow(c.earthRadius));
 
-        return earth;
+        this.mesh = earth;
     }
 
     _makeSeattleMesh() {
@@ -56,6 +55,7 @@ class Earth {
 
         group.children.forEach(o => o.material.opacity = 0);
 
+        group.name = 'seattle';
         return group;
     }
 
@@ -82,6 +82,7 @@ class Earth {
 
         group.children.forEach(o => o.material.opacity = 0);
 
+        group.name = 'ny';
         return group;
     }
 

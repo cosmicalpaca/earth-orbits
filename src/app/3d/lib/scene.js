@@ -4,33 +4,25 @@ const Karman = require('./meshes/karman');
 const ISS = require('./meshes/iss');
 const f = require('flags');
 
-function createSceneObjects() {
-    let objects = {};
+module.exports = function() {
+    let objects = [];
 
     if (f.HELPERS) {
-        objects.grid = new THREE.GridHelper(100, 100);
-        objects.axis = new THREE.AxisHelper(10);
+        objects.push(new THREE.GridHelper(100, 100));
+        objects.push(new THREE.AxisHelper(10));
     }
 
-    objects.ambientLight = new THREE.AmbientLight(0x777777);
+    objects.push(new THREE.AmbientLight(0x777777));
 
     let directLight = new THREE.DirectionalLight(0xfcfade, 0.75);
     directLight.position.set(150, 20, 150);
-    objects.directLight = directLight;
+    objects.push(directLight);
 
-    let pointLight = new THREE.PointLight(0xadac9f);
-    pointLight.position.set(0, 15, -30);
-    objects.pointLight = pointLight;
+    objects.push(new Earth().mesh);
 
-    objects.karman = new Karman();
+    objects.push(new Karman().mesh);
 
-    objects.earth = new Earth();
-
-    objects.iss = new ISS();
+    objects.push(new ISS().mesh);
 
     return objects;
-}
-
-module.exports = {
-    createSceneObjects,
 };

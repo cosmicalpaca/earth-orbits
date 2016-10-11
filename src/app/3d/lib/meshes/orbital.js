@@ -58,7 +58,7 @@ class OrbitMeasurement {
     }
 
     _makeLegend(outerRadius, label) {
-        let {mesh, size} = (new Text.Plane(label, 4));
+        let {mesh, size} = (new Text.Sprite(label, 4));
 
         this.size = size;
 

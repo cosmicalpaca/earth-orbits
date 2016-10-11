@@ -21,11 +21,13 @@ class ISS {
         group.add(this._makeOrbitalLine());
         group.name = 'iss';
 
+        group.update = this.update.bind(this);
+
         this.mesh = group;
     }
 
     _makeMesh() {
-        let geometry = new THREE.BoxGeometry(0.1, 0.01, 0.01);
+        let geometry = new THREE.BoxGeometry(100, 100, 100);
         let material = new THREE.MeshBasicMaterial({transparent: true});
         let mesh = new THREE.Mesh(geometry, material);
         mesh.name = 'station';
@@ -40,7 +42,7 @@ class ISS {
         for (let i = 0; i < SEGMENTS; i++) {
             let date = new Date(now + step * i);
             let position = this._getPositionForDate(date);
-            vertices.push(new THREE.Vector3(position.x / 1000, position.y / 1000, position.z / 1000));
+            vertices.push(new THREE.Vector3(position.x, position.y, position.z));
         }
 
         let mesh = (new Line.Dashed(vertices, 2)).mesh;
@@ -51,7 +53,7 @@ class ISS {
         this.time = this.time + 1000 * 60 * 0.1;
         let now = new Date(this.time);
         let position = this._getPositionForDate(now);
-        this.mesh.getObjectByName('station').position.set(position.x / 1000, position.y / 1000, position.z / 1000);
+        this.mesh.getObjectByName('station').position.set(position.x, position.y, position.z);
     }
 
     _getPositionForDate(now) {

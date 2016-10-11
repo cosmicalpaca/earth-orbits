@@ -2,7 +2,7 @@ const _ = require('lodash');
 const store = require('store');
 const THREE = require('three');
 
-const scene = require('./lib/scene');
+const createScene = require('./lib/scene');
 const stats = require('./lib/stats');
 const lca = require('./lib/lca');
 const f = require('flags');
@@ -34,10 +34,12 @@ class App {
         [this.renderer, this.camera] = lca.initialize();
 
         this.scene = new THREE.Scene();
-        _.forEach(scene.createSceneObjects(), (object, name) => {
-            this.scene.add(object.mesh ? object.mesh : object);
-            this[name] = object;
-            if (object.update) this.dynamicObjects.push(name);
+        _.forEach(createScene(), object => {
+            this.scene.add(object);
+
+            if (object.update) {
+                this.dynamicObjects.push(object.name);
+            }
         });
 
         this.stats = stats.initialize();
@@ -81,7 +83,9 @@ class App {
 
     updateDynamicObjects() {
         if (this.dynamicObjects.length) {
-            this.dynamicObjects.map(name => this[name].update());
+            this.dynamicObjects.map(name => {
+                this.scene.getObjectByName(name).update();
+            });
         }
     }
 
@@ -95,13 +99,22 @@ class App {
             if (this.controls && propString.includes('camera')) return _.noop;
 
             let pathSegments = _.split(propString, '_');
-            let prop = pathSegments.pop();
-            let object = _.get(this, `${pathSegments.join('.')}`);
+            let objectName = pathSegments[0];
+            let objectProp = pathSegments[1];
 
-            if (!object) throw new Error(`Bad object specified for tween`);
+            let object = this.lookUpObjectByName(objectName);
 
-            return tween.createTweenFunction(object, prop, keyframe.from[propString], keyframe.to[propString], keyframe.length, keyframe.easing);
+            if (!object) throw new Error(`Object not found: ${objectName} [${objectProp}]`);
+
+            return tween.createTweenFunction(object, objectProp, keyframe.from[propString], keyframe.to[propString], keyframe.length, keyframe.easing);
         });
+    }
+
+    lookUpObjectByName(name) {
+        switch (name) {
+            case 'camera': return this.camera;
+            default: return this.scene.getObjectByName(name);
+        }
     }
 
     updateCurrentAnimations() {
