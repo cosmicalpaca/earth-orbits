@@ -8,7 +8,7 @@ const Line = require('./line');
 const SEGMENTS = 128;
 
 class OrbitalLine {
-    constructor(radius, color = c.white, width = 0.01) {
+    constructor(radius, color = c.white, width = 10) {
         let geometry = new THREE.RingGeometry(radius - width, radius, SEGMENTS);
 
         let material = new THREE.MeshLambertMaterial({
@@ -62,7 +62,7 @@ class OrbitMeasurement {
 
         this.size = size;
 
-        mesh.translateOnAxis(new THREE.Vector3(1, -0.01, 0), outerRadius + 0.15);
+        mesh.translateOnAxis(new THREE.Vector3(1, -0.01, 0), outerRadius + 15);
         mesh.rotation.setFromVector3(new THREE.Vector3(0, 0, m.degree(-45)));
 
         return mesh;

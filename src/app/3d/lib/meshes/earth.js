@@ -12,18 +12,16 @@ const SurfaceLine = require('./surface-line');
 const Text = require('./text');
 
 const SEGMENTS = 64;
-const RADIUS = c.earthRadius;
-
 /**
  * Earth class. Instances have two properties: planet and clouds
  */
 
 class Earth {
-    constructor(radius = RADIUS) {
+    constructor() {
         let earth = new THREE.Object3D();
 
-        earth.add(this._makePlanetMesh(radius));
-        earth.add(this._makeCloudsMesh(radius));
+        earth.add(this._makePlanetMesh(c.earthRadius));
+        earth.add(this._makeCloudsMesh(c.earthRadius + c.earthAtmoshpere));
 
         let seattle = this._makeSeattleMesh();
         earth.add(seattle);
@@ -33,7 +31,7 @@ class Earth {
         earth.add(ny);
         earth.ny = ny;
 
-        if (f.shaders) earth.add(this._shaderGlow(radius));
+        if (f.shaders) earth.add(this._shaderGlow(c.earthRadius));
 
         return earth;
     }
@@ -125,8 +123,6 @@ class Earth {
      * created for clouds is a bit bigger then planet's
      */
     _makeCloudsMesh(radius) {
-        radius = radius + 0.02;
-
         let loader = new THREE.TextureLoader();
 
         let map = loader.load(f.HD ? 'images/clouds_8k.jpg' : 'images/clouds_4k.png');

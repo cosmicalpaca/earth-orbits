@@ -15,13 +15,11 @@ function initialize() {
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     store.dispatch('SET-ANISOTROPY', {maxAnisotropy: renderer.getMaxAnisotropy()});
-    console.info(`Anisotropy max is set to ${renderer.getMaxAnisotropy()}`)
+    console.info(`Anisotropy max is set to ${renderer.getMaxAnisotropy()}`);
     document.querySelector('.webgl-container').appendChild(renderer.domElement);
 
     /** Camera **/
-    let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 10000);
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
-    camera.position.copy(new THREE.Vector3(0, 0, 20));
+    let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 10, 100000);
 
     window.addEventListener('resize', () => {
         renderer.setSize(window.innerWidth, window.innerHeight);

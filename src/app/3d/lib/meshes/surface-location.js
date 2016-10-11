@@ -12,7 +12,7 @@ class SurfaceLocation {
      * @param {Number} [color]
      * @param {Number} [size]
      */
-    constructor(position, color = c.white, size = 0.01) {
+    constructor(position, color = c.white, size = 10) {
         let geometry = new THREE.SphereGeometry(size, 16, 16);
         let material = new THREE.MeshBasicMaterial({
             transparent: true,
@@ -20,7 +20,7 @@ class SurfaceLocation {
             color: color,
         });
 
-        geometry.translate(position.x, position.y, position.z * 1.01);
+        geometry.translate(position.x, position.y, position.z + 20);
 
         let mesh = new THREE.Mesh(geometry, material);
 

@@ -17,7 +17,7 @@ class Line {
 }
 
 class LineSegmentGeometry {
-    constructor(from, to, width = 0.005) {
+    constructor(from, to, width = 5) {
         this.geometry = this._createGeometryFromEndpoints(from, to, width);
     }
 
