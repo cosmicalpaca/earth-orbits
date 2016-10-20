@@ -11,7 +11,7 @@ class OrbitalLine {
     constructor(radius, color = c.white, width = 10) {
         let geometry = new THREE.RingGeometry(radius - width, radius, SEGMENTS);
 
-        let material = new THREE.MeshLambertMaterial({
+        let material = new THREE.MeshBasicMaterial({
             color: color,
             transparent: true,
         });
@@ -26,9 +26,10 @@ class OrbitalBand {
     constructor(innerRadius, outerRadius, color = c.white) {
         let geometry = new THREE.RingGeometry(innerRadius, outerRadius, SEGMENTS);
 
-        let material = new THREE.MeshLambertMaterial({
+        let material = new THREE.MeshBasicMaterial({
             color: color,
             transparent: true,
+            depthTest: false,
         });
 
         let mesh = new THREE.Mesh(geometry, material);
@@ -63,6 +64,8 @@ class OrbitMeasurement {
         this.size = size;
 
         mesh.translateOnAxis(new THREE.Vector3(1, -0.01, 0), outerRadius + 15);
+        mesh.translateOnAxis(new THREE.Vector3(1, -1, 0), this.size + 30);
+
         mesh.rotation.setFromVector3(new THREE.Vector3(0, 0, m.degree(-45)));
 
         return mesh;

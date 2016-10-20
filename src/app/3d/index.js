@@ -18,6 +18,8 @@ const tween = require('./lib/keyframe-controller/tween');
  * TODO: Refactor to use object names to find objects to tween
  *
  * TODO: Add vignette filter
+ *
+ * TODO: Remove from scene when not in use
  */
 
 class App {

@@ -26,7 +26,7 @@ module.exports = window.keyframes = [
         ny_opacity: 0,
     }, { /** Big title **/
         camera_position: new V3(6500, 4400, 4500),
-        camera_rotation: new V3(0, m.degree(20), 0),
+        camera_rotation: new V3(0, m.degree(22), 0),
     }, { /** Quote **/
         camera_position: new V3(6600, 4420, 4500),
         camera_rotation: new V3(0, m.degree(15), 0),

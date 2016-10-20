@@ -11,6 +11,7 @@ class Line {
             new THREE.LineBasicMaterial({
                 transparent: true,
                 linewidth: width,
+                depthTest: false,
             })
         );
     }
