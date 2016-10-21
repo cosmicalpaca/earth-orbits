@@ -28,6 +28,7 @@ class KeyframeController {
                 to: KEYFRAMES[index + 1],
                 easing: frame.dataset.easing || 'easeInOutQuad',
                 index: index,
+                dynamicText: frame.querySelectorAll('[data-role="dynamic-text"]'),
             };
         });
 

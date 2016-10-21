@@ -26,4 +26,8 @@ math.degree = function (degree) {
     return (Math.PI / 180) * degree;
 };
 
+math.minutes = function (minutes) {
+    return 1000 * 60 * minutes;
+}
+
 module.exports = math;

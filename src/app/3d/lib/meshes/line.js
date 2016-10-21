@@ -66,8 +66,8 @@ class DashedLine {
             new THREE.LineDashedMaterial({
                 transparent: true,
                 linewidth: width,
-                dashSize: 0.02,
-                gapSize: 0.02,
+                dashSize: 100,
+                gapSize: 100,
             })
         );
     }

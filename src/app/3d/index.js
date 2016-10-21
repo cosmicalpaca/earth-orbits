@@ -6,6 +6,7 @@ const createScene = require('./lib/scene');
 const stats = require('./lib/stats');
 const lca = require('./lib/lca');
 const f = require('flags');
+const m = require('math');
 
 const KC = require('./lib/keyframe-controller');
 const tween = require('./lib/keyframe-controller/tween');
@@ -86,8 +87,19 @@ class App {
     updateDynamicObjects() {
         if (this.dynamicObjects.length) {
             this.dynamicObjects.map(name => {
-                this.scene.getObjectByName(name).update();
+                this.scene.getObjectByName(name).update(this.percentageInKeyframe);
             });
+        }
+    }
+
+    dynamicTextFunctions(element, fn) {
+        switch (fn) {
+            case 'timeCounter':
+                return () => {
+                    let minutes = Math.floor(180 * this.percentageInKeyframe);
+                    if (minutes < 0) minutes = 0;
+                    element.innerHTML = `${minutes} min.`;
+                };
         }
     }
 
@@ -110,6 +122,12 @@ class App {
 
             return tween.createTweenFunction(object, objectProp, keyframe.from[propString], keyframe.to[propString], keyframe.length, keyframe.easing);
         });
+
+        if (keyframe.dynamicText.length) {
+            _.forEach(keyframe.dynamicText, element => {
+                this.tweens.push(this.dynamicTextFunctions(element, element.dataset.fn));
+            });
+        }
     }
 
     lookUpObjectByName(name) {
@@ -124,6 +142,8 @@ class App {
 
         let scroll = document.body.scrollTop;
         let positionInKeyframe = scroll - this.__keyframe.top;
+
+        this.percentageInKeyframe = positionInKeyframe / this.__keyframe.length;
 
         _.forEach(this.tweens, fn => fn(positionInKeyframe));
     }

@@ -15,4 +15,6 @@ c.yellow = 0xffd700;
 c.blue = 0x357edd;
 c.white = 0xffffff;
 
+c.issAltitude = c.earthRadius + 400;
+
 module.exports = c;

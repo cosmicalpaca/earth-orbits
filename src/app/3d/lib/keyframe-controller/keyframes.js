@@ -43,13 +43,22 @@ module.exports = window.keyframes = [
         camera_position: new V3(4500, 4320, -5500),
         camera_rotation: new V3(m.degree(-45), m.degree(65), m.degree(-30)),
         karman_opacity: 1,
-    }, { /** ISS View **/
-        camera_position: new V3(4500, 4320, -5500),
-        camera_rotation: new V3(m.degree(-45), m.degree(65), m.degree(-30)),
-        karman_opacity: 1,
+        iss_opacity: 0,
+    }, { /** Gravity mention **/
+        camera_position: new V3(4500, 10000, -2500),
+        camera_rotation: new V3(m.degree(-70), m.degree(10), m.degree(0)),
+        // camera_rotation: new V3(m.degree(-90), m.degree(0), m.degree(0)),
+        karman_opacity: 0,
+        iss_opacity: 1,
+    }, { /** ISS Flyover **/
+        camera_position: new V3(4500, 11000, -2000),
+        camera_rotation: new V3(m.degree(-70), m.degree(10), m.degree(0)),
+        karman_opacity: 0,
+        iss_opacity: 1,
     }, { /** Top view **/
         camera_position: new V3(0, 50000, 0),
         camera_rotation: new V3(-1.57, 0, 0),
+        iss_opacity: 0,
     }, { /** Side view **/
         camera_position: new V3(0, 0, 50000),
         camera_rotation: new V3(0, 0, 0),

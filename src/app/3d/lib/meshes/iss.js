@@ -1,6 +1,7 @@
 const SGP4 = require('sgp4');
 const THREE = require('three');
 const c = require('constants');
+const m = require('math');
 
 const Line = require('./line');
 
@@ -14,7 +15,7 @@ const ISS_TLE = [
 class ISS {
     constructor() {
         this.issSatRec = SGP4.twoline2rv(ISS_TLE[0], ISS_TLE[1], SGP4.wgs84());
-        this.time = new Date().getTime();
+        this.time = 1477077878157; // Hardcoded to October 21, 2:41pm EST
 
         let group = new THREE.Object3D();
         group.add(this._makeMesh());
@@ -27,11 +28,100 @@ class ISS {
     }
 
     _makeMesh() {
-        let geometry = new THREE.BoxGeometry(100, 100, 100);
-        let material = new THREE.MeshBasicMaterial({transparent: true});
-        let mesh = new THREE.Mesh(geometry, material);
-        mesh.name = 'station';
-        return mesh;
+        let group = new THREE.Group();
+
+        let geometry = new THREE.CylinderGeometry(2, 2, 250, 6);
+        let material = new THREE.MeshPhongMaterial({
+            transparent: true,
+            specular: 0xefefd0,
+        });
+        group.add(new THREE.Mesh(geometry, material));
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, 125, 30);
+        group.add(new THREE.Mesh(geometry, material));
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, 100, 30);
+        group.add(new THREE.Mesh(geometry, material));
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, 75, 30);
+        group.add(new THREE.Mesh(geometry, material));
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, 60, 30);
+        group.add(new THREE.Mesh(geometry, material));
+
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, 125, -30);
+        group.add(new THREE.Mesh(geometry, material));
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, 110, -30);
+        group.add(new THREE.Mesh(geometry, material));
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, 75, -30);
+        group.add(new THREE.Mesh(geometry, material));
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, 60, -30);
+        group.add(new THREE.Mesh(geometry, material));
+
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, -125, 30);
+        group.add(new THREE.Mesh(geometry, material));
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, -110, 30);
+        group.add(new THREE.Mesh(geometry, material));
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, -75, 30);
+        group.add(new THREE.Mesh(geometry, material));
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, -60, 30);
+        group.add(new THREE.Mesh(geometry, material));
+
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, -125, -30);
+        group.add(new THREE.Mesh(geometry, material));
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, -110, -30);
+        group.add(new THREE.Mesh(geometry, material));
+
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, -75, -30);
+        group.add(new THREE.Mesh(geometry, material));
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        geometry.scale(1, 10, 50);
+        geometry.translate(0, -60, -30);
+        group.add(new THREE.Mesh(geometry, material));
+
+        group.rotateZ(Math.PI / 4);
+        group.rotateX(Math.PI / 4);
+
+        group.name = 'station';
+
+        return group;
     }
 
     _makeOrbitalLine() {
@@ -46,12 +136,15 @@ class ISS {
         }
 
         let mesh = (new Line.Dashed(vertices, 2)).mesh;
+        mesh.material.opacityMultiplier = 0.5;
         return mesh;
     }
 
-    update() {
-        this.time = this.time + 1000 * 60 * 0.1;
-        let now = new Date(this.time);
+    update(percent) {
+        if (percent < 0.002 || percent > 0.9) return;
+
+        let time = this.time + m.minutes(180) * percent;
+        let now = new Date(time);
         let position = this._getPositionForDate(now);
         this.mesh.getObjectByName('station').position.set(position.x, position.y, position.z);
     }
