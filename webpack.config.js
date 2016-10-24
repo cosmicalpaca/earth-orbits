@@ -1,7 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 /**
  * # Webpack Build Process for Data Lasso
@@ -11,13 +9,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
  * --production
  * Removes JS and CSS source maps from the output; Sets up `NODE_ENV` variable to`production`.
  *
- * --watch
- * Makes webpack watch for changes
- *
  */
 
 const production = process.argv.includes('-p');
-const watch = process.argv.includes('--watch');
 
 let webpackConfig = {
     entry: {
@@ -28,7 +22,7 @@ let webpackConfig = {
         filename: 'app.js',
         path: path.join(__dirname, 'public/build'),
     },
-    watch: watch,
+    watch: !production,
     module: {
         loaders: [
             {
@@ -62,13 +56,15 @@ if (production) {
         },
     }));
 
-    webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false,
-        },
-    }));
+    // Below needs transpilation to ES5 in order to work
 
-    webpackConfig.output.filename = 'app.min.js';
+    // webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
+    //     compress: {
+    //         warnings: false,
+    //     },
+    // }));
+
+    // webpackConfig.output.filename = 'app.min.js';
 }
 
 module.exports = webpackConfig;

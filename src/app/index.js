@@ -5,5 +5,8 @@
 require('./3d');
 require('./ui/display');
 
-// ReactDom.render(<UI/>, document.getElementById('react-container'));
+const flags = require('flags');
 
+if (flags.CSSHELPERS) {
+    document.body.classList.add('css-helpers');
+}

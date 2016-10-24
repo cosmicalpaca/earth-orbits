@@ -1,4 +1,4 @@
-const HD = false;
+const HD = true;
 
 module.exports = {
     AA: HD,
@@ -7,4 +7,5 @@ module.exports = {
     shaders: false,
     HELPERS: false,
     WIREFRAME: false,
+    CSSHELPERS: false,
 };

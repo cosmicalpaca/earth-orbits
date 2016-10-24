@@ -4,11 +4,13 @@ const webpack = require('webpack');
 const gutil = require('gulp-util');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
+const gulpif = require('gulp-if');
 
 /** Webpack **/
 
+const production = process.argv.includes('-p');
+
 let webpackConfig = require('./webpack.config');
-webpackConfig.watch = true;
 let compiler = webpack(webpackConfig);
 
 function compileJs() {
@@ -27,6 +29,8 @@ function compileJs() {
 /** Tasks **/
 
 gulp.task('serve', () => {
+    if (production) return;
+
     browserSync.init({
         server: {
             baseDir: './public',
@@ -45,11 +49,11 @@ gulp.task('webpack', (callback) => {
 
 gulp.task('sass', () => {
     return gulp.src('./src/styles/*scss')
-        .pipe(sourcemaps.init())
+        .pipe(gulpif(!production, sourcemaps.init()))
         .pipe(sass().on('error', sass.logError))
-        .pipe(sourcemaps.write())
+        .pipe(gulpif(!production, sourcemaps.write()))
         .pipe(gulp.dest('./public/build'))
-        .pipe(browserSync.stream())
+        .pipe(browserSync.stream());
 });
 
 gulp.task('default', ['webpack', 'sass', 'serve']);

@@ -41,7 +41,6 @@ body {
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    border-bottom: 1px dotted #ccc;
     padding: 0 4vw;
     color: #fff;
 
@@ -135,4 +134,11 @@ body {
     border-radius: 1rem;
     min-width: 35vw;
     text-align: right;
+}
+
+
+.css-helpers {
+    .frame {
+        border-bottom: 1px dotted #ccc;
+    }
 }
