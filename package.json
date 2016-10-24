@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start": "gulp",
-    "build": "gulp -p"
+    "build": "gulp -p",
+    "deploy": "aws s3 sync ./public s3://cosmicalpa.ca --exclude '*DS_Store' --exclude '*_4k.jpg' --exclude '*_4k.png'"
   },
   "author": {
     "name": "Jamie Gilyazetdinov"
