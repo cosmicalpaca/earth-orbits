@@ -21,6 +21,8 @@ const tween = require('./lib/keyframe-controller/tween');
  * TODO: Add vignette filter
  *
  * TODO: Remove from scene when not in use
+ *
+ * TODO: Add absolute max-width to body!
  */
 
 class App {
@@ -96,7 +98,7 @@ class App {
         switch (fn) {
             case 'timeCounter':
                 return () => {
-                    let minutes = Math.floor(180 * this.percentageInKeyframe);
+                    let minutes = Math.floor(270 * this.percentageInKeyframe);
                     if (minutes < 0) minutes = 0;
                     element.innerHTML = `${minutes} min.`;
                 };

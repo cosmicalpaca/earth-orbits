@@ -47,7 +47,6 @@ module.exports = window.keyframes = [
     }, { /** Gravity mention **/
         camera_position: new V3(4500, 10000, -2500),
         camera_rotation: new V3(m.degree(-70), m.degree(10), m.degree(0)),
-        // camera_rotation: new V3(m.degree(-90), m.degree(0), m.degree(0)),
         karman_opacity: 0,
         iss_opacity: 1,
     }, { /** ISS Flyover **/
@@ -55,6 +54,23 @@ module.exports = window.keyframes = [
         camera_rotation: new V3(m.degree(-70), m.degree(10), m.degree(0)),
         karman_opacity: 0,
         iss_opacity: 1,
+    }, { /** LEO **/
+        camera_position: new V3(0, 0, 32000),
+        camera_rotation: new V3(m.degree(0), m.degree(0), m.degree(0)),
+        karman_opacity: 0,
+        iss_opacity: 0,
+        leo_opacity: 0,
+    }, { /** LEO Details **/
+        camera_position: new V3(0, 0, 40000),
+        camera_rotation: new V3(m.degree(0), m.degree(0), m.degree(0)),
+        karman_opacity: 0,
+        iss_opacity: 0,
+        leo_opacity: 1,
+    }, { /** About inclination **/
+        camera_position: new V3(0, 0, 20000),
+        camera_rotation: new V3(m.degree(0), m.degree(0), m.degree(0)),
+        karman_opacity: 0,
+        iss_opacity: 0,
     }, { /** Top view **/
         camera_position: new V3(0, 50000, 0),
         camera_rotation: new V3(-1.57, 0, 0),

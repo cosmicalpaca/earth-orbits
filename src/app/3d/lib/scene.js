@@ -4,6 +4,7 @@ const f = require('flags');
 const Earth = require('./meshes/earth');
 const Karman = require('./meshes/karman');
 const ISS = require('./meshes/iss');
+const LEO = require('./meshes/leo');
 
 module.exports = function() {
     let objects = [];
@@ -25,6 +26,8 @@ module.exports = function() {
     objects.push(new Karman().mesh);
 
     objects.push(new ISS().mesh);
-    
+
+    objects.push(new LEO().mesh);
+
     return objects;
 };

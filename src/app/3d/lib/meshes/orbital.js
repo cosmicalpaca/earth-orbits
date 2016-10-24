@@ -8,7 +8,7 @@ const Line = require('./line');
 const SEGMENTS = 128;
 
 class OrbitalLine {
-    constructor(radius, color = c.white, width = 10) {
+    constructor(radius, width = 10, color = c.white) {
         let geometry = new THREE.RingGeometry(radius - width, radius, SEGMENTS);
 
         let material = new THREE.MeshBasicMaterial({

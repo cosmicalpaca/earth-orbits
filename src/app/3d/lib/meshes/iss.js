@@ -2,6 +2,7 @@ const SGP4 = require('sgp4');
 const THREE = require('three');
 const c = require('constants');
 const m = require('math');
+const h = require('helpers');
 
 const Line = require('./line');
 
@@ -15,12 +16,14 @@ const ISS_TLE = [
 class ISS {
     constructor() {
         this.issSatRec = SGP4.twoline2rv(ISS_TLE[0], ISS_TLE[1], SGP4.wgs84());
-        this.time = 1477077878157; // Hardcoded to October 21, 2:41pm EST
+        this.startingTime = 1477077878157; // Hardcoded to October 21, 2:41pm EST
 
         let group = new THREE.Object3D();
         group.add(this._makeMesh());
         group.add(this._makeOrbitalLine());
         group.name = 'iss';
+
+        h.setOpacity(group, 0);
 
         group.update = this.update.bind(this);
 
@@ -126,11 +129,10 @@ class ISS {
 
     _makeOrbitalLine() {
         let step = (92.65 * 1000 * 60) / SEGMENTS;
-        let now = new Date().getTime();
         let vertices = [];
 
         for (let i = 0; i < SEGMENTS; i++) {
-            let date = new Date(now + step * i);
+            let date = new Date(this.startingTime + step * i);
             let position = this._getPositionForDate(date);
             vertices.push(new THREE.Vector3(position.x, position.y, position.z));
         }
@@ -143,7 +145,7 @@ class ISS {
     update(percent) {
         if (percent < 0.002 || percent > 0.9) return;
 
-        let time = this.time + m.minutes(180) * percent;
+        let time = this.startingTime + m.minutes(270) * percent;
         let now = new Date(time);
         let position = this._getPositionForDate(now);
         this.mesh.getObjectByName('station').position.set(position.x, position.y, position.z);

@@ -5,7 +5,7 @@ c.earthAtmoshpere = c.earthRadius + 50;
 
 c.karmanLine = c.earthRadius + 100;
 
-c.leoLower = c.earthRadius + 160;
+c.leoLower = c.earthRadius + 200;
 c.leoUpper = c.earthRadius + 2000;
 
 c.meoLower = c.earthRadius + 2000;
