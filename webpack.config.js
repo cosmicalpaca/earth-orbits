@@ -15,7 +15,7 @@ const production = process.argv.includes('-p');
 
 let webpackConfig = {
     entry: {
-        app: path.join(__dirname, 'src/index.js'),
+        app: path.join(__dirname, 'src/app/index.js'),
         vendor: ['backbone-model', 'lodash', 'three', 'three-orbit-controls', 'invariant', 'stats.js', 'tween-functions'],
     },
     output: {
@@ -28,6 +28,10 @@ let webpackConfig = {
             {
                 test: /\.glsl$/,
                 loader: 'shader',
+            }, {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
             },
         ],
     },

@@ -3,7 +3,7 @@
 // const UI = require('./ui');
 
 require('./3d');
-require('./ui/display');
+// require('./ui/display');
 
 const flags = require('flags');
 

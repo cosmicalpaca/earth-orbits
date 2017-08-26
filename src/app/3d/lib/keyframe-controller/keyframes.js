@@ -5,16 +5,30 @@ const V3 = require('THREE').Vector3;
 
 module.exports = window.keyframes = [
     {
-        earth_rotation: new V3(0, -2, 0),
-        camera_position: new V3(-3000, 6000, 10000),
-        camera_rotation: new V3(m.degree(9), 0, m.degree(19)),
-        seattle_opacity: 0,
+        earth: {
+            rotation: new V3(0, -2, 0),
+        },
+        camera: {
+            position: new V3(-3000, 6000, 10000),
+            rotation: new V3(m.degree(9), 0, m.degree(19)),
+        },
+        seattle: {
+            opacity: 0,
+        },
     }, { /** Focus on Seattle **/
-        earth_rotation: new V3(0, 0, 0),
-        camera_position: new V3(-3000, 4000, 10000),
-        camera_rotation: new V3(m.degree(2), 0, m.degree(19)),
-        seattle_opacity: 1,
-        ny_opacity: 0,
+        earth: {
+            rotation: new V3(0, 0, 0),
+        },
+        camera: {
+            position: new V3(-3000, 4000, 10000),
+            rotation: new V3(m.degree(2), 0, m.degree(19)),
+        },
+        seattle: {
+            opacity: 1,
+        },
+        ny: {
+            opacity: 0,
+        },
     }, { /** Focus on New York **/
         camera_position: new V3(4000, 5000, 7000),
         camera_rotation: new V3(m.degree(-10), m.degree(46), 0),

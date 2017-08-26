@@ -5,7 +5,7 @@ module.exports = {
     HD: HD,
     anisotropy: HD,
     shaders: false,
-    HELPERS: false,
+    HELPERS: true,
     WIREFRAME: false,
     CSSHELPERS: false,
 };
